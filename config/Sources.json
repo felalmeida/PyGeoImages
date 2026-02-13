@@ -1,0 +1,7 @@
+{
+    "Source_01" : {
+        "Name": "Planetary Computer",
+        "SysName": "PlanetaryComputer",
+        "Enabled": true
+    }
+}
