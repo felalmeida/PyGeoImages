@@ -10,7 +10,7 @@ cloudpickle==3.1.2
 dask==2026.1.2
 et_xmlfile==2.0.0
 fsspec==2026.2.0
-geojson==3.1.0
+geojson==3.2.0
 idna==3.11
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
@@ -20,6 +20,7 @@ odc-geo==0.5.0
 odc-loader==0.6.4
 openpyxl==3.1.5
 packaging==26.0
+pandas==3.0.0
 partd==1.4.2
 planetary-computer==1.0.0
 pydantic==2.12.5
@@ -37,11 +38,12 @@ rasterio==1.5.0
 referencing==0.37.0
 requests==2.32.5
 rpds-py==0.30.0
-shapely==2.0.6
+scipy==1.17.0
+shapely==2.1.2
 simplejson==3.20.2
 six==1.17.0
 toolz==1.1.0
-turfpy==0.0.8
+turfpy==0.0.7
 typing-inspection==0.4.2
 typing_extensions==4.15.0
 urllib3==2.6.3
