@@ -13,7 +13,6 @@ import pystac_client
 import planetary_computer
 import geojson
 import turfpy.measurement
-# import geoai
 
 ThisPath    = os.path.dirname(__file__)+'/'
 ConfigPath  = ThisPath+'config/'
@@ -23,23 +22,6 @@ DataPath    = ThisPath+'data/'
 if not os.path.exists(MetaPath): os.makedirs(MetaPath)
 if not os.path.exists(DataPath): os.makedirs(DataPath)
 
-### Enabled Brazilian States
-with open(ConfigPath+'Estados.json', 'r') as fConfigFile:
-    jEstados = json.load(fConfigFile)
-if (len(jEstados) > 0):
-    jEstados = {key:val for key,val in jEstados.items() if val['Enabled'] == True}
-EstadosIds = sorted([jEstados[Item]['Id'] for Item in jEstados])
-
-### Enabled Brazilian States GeoJson
-jBrasil = {'type':'FeatureCollection','features':[]}
-with open(ConfigPath+'brazil_geo.json', 'r') as fConfigFile:
-    jBrasilAll = json.load(fConfigFile)
-for MapaEstado in jBrasilAll['features']:
-    if (MapaEstado['id'] in EstadosIds):
-        jBrasil['features'].append(MapaEstado)
-
-gInterestArea = geojson.loads(json.dumps(jBrasil))
-gInterestBBOX = turfpy.measurement.bbox(gInterestArea)
 
 ### Sources Config
 with open(ConfigPath+'Sources.json', 'r') as fConfigFile:
@@ -47,9 +29,63 @@ with open(ConfigPath+'Sources.json', 'r') as fConfigFile:
 if (len(jSources) > 0):
     jSources = {key:val for key,val in jSources.items() if val['Enabled'] == True}
 
+### Enabled Brazilian States
+jStates = []
+with open(ConfigPath+'Estados_GeoJS.json', 'r') as fConfigFile:
+    jStatesGeoJS = json.load(fConfigFile)
+    jStatesGeoJS = jStatesGeoJS['features']
+
+with open(ConfigPath+'Estados.json', 'r') as fConfigFile:
+    jStatesAll = json.load(fConfigFile)
+
+for jState in jStatesAll:
+    if (jState['Enabled']):
+        jState['features'] = []
+        for StateGeo in jStatesGeoJS:
+            if (StateGeo['id'] == jState['Sigla']):
+                jState['features'].append(StateGeo)
+                break
+        jStates.append(jState)
+del jStatesAll
+del jStatesGeoJS
+
+### Enabled Brazilian Cities
+jCities = []
+with open(ConfigPath+'Municipios_GeoJS.json', 'r') as fConfigFile:
+    jCitiesGeoJS = json.load(fConfigFile)
+    jCitiesGeoJS = jCitiesGeoJS['features']
+
+with open(ConfigPath+'Municipios.json', 'r') as fConfigFile:
+    jCitiesAll = json.load(fConfigFile)
+
+for jCity in jCitiesAll:
+    if (jCity['Enabled']):
+        jCity['features'] = []
+        for CityGeo in jCitiesGeoJS:
+            if (int(CityGeo['properties']['id']) == int(jCity['Cod_Municipio_Completo'])):
+                jCity['features'].append(CityGeo)
+                break
+        jCities.append(jCity)
+del jCitiesAll
+del jCitiesGeoJS
+
+### Interests Areas For States
+gStatesInterestArea = []
+gStatesInterestBBOX = []
+for itState in jStates:
+    gStatesInterestArea.append(geojson.loads(json.dumps({'type':'FeatureCollection','features':itState['features']})))
+    gStatesInterestBBOX.append({'id':itState['Sigla'],'name':itState['Estado'],'bbox':turfpy.measurement.bbox(gStatesInterestArea[-1])})
+
+### Interests Areas For Cities
+gCitiesInterestArea = []
+gCitiesInterestBBOX = []
+for itCity in jCities:
+    gCitiesInterestArea.append(geojson.loads(json.dumps({'type':'FeatureCollection','features':itCity['features']})))
+    gCitiesInterestBBOX.append({'id':itCity['Cod_Municipio_Completo'],'name':itCity['Nome_Municipio'],'bbox':turfpy.measurement.bbox(gCitiesInterestArea[-1])})
+
 
 def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUpdateCatallog=False):
-    global MetaPath, DataPath, jSources, gInterestArea, gInterestBBOX
+    global MetaPath, DataPath, jSources, gCitiesInterestBBOX
 
     SourceData = jSources[v_Source]
     MetaFileName = os.path.realpath(MetaPath+SourceData['SysName']+'_'+'Collections.meta.json')
@@ -107,16 +143,15 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
 
     for collection in jCollections:
         CollectionId = collection['CollectionId']
-        CatSearch = planetarycomputer_catalog.search(collections=[CollectionId], bbox=gInterestBBOX, datetime=dtRangeStr)
-        CatItems = CatSearch.item_collection()
-        # with open(DataPath+CollectionId+'.json','w') as fConfigFile:
-        #     fConfigFile.write(json.dumps(CatItems.to_dict(),sort_keys=True,indent=4))
-        for CatSearchItem in CatSearch.items_as_dicts():
-            dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime']).date()
-            SavePath = os.path.realpath(DataPath+CollectionId+'/'+dtItem.strftime("%Y/%m/"))
-            os.makedirs(SavePath, exist_ok=True)
-            with open(SavePath+'/'+CatSearchItem['id']+'.json','w') as fConfigFile:
-                fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
+        for gInterestBBOX in gCitiesInterestBBOX:
+            print(dtRangeStr, CollectionId, gInterestBBOX['name'])
+            CatSearch = planetarycomputer_catalog.search(collections=[CollectionId], bbox=gInterestBBOX['bbox'], datetime=dtRangeStr)
+            for CatSearchItem in CatSearch.items_as_dicts():
+                dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime']).date()
+                SavePath = os.path.realpath(DataPath+CollectionId+'/'+str(gInterestBBOX['id'])+'/'+dtItem.strftime("%Y/%m/%d"))
+                os.makedirs(SavePath, exist_ok=True)
+                with open(SavePath+'/'+CatSearchItem['id']+'.json','w') as fConfigFile:
+                    fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
 
 
 def MainProcess():
@@ -126,11 +161,10 @@ def MainProcess():
     dtLoopStart = (dtLoopEnd.replace(hour=0, minute=0, second=0, day=1, month=1) - datetime.timedelta(days=1)).replace(day=1, month=1) # Get First Day of past Year
 
     # Just for DEV Tests
-    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=7)
+    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=14)
 
     for Source in jSources:
-        SourceData = jSources[Source]
-        if (SourceData['SysName'] == 'PlanetaryComputer'):
+        if (jSources[Source]['SysName'] == 'PlanetaryComputer'):
             PlanetaryComputer(Source, dtLoopStart, dtLoopEnd)
 
 

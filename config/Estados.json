@@ -1,137 +1,191 @@
-{
-    "BR_AC" : {
-        "Name": "Acre",
-        "Id": "AC",
-        "Enabled": false
+[
+    {
+        "Enabled":false,
+        "Estado":"Rondônia",
+        "Regiao":"Norte",
+        "Sigla":"RO",
+        "IBGE":11
     },
-    "BR_AL" : {
-        "Name": "Alagoas",
-        "Id": "AL",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Acre",
+        "Regiao":"Norte",
+        "Sigla":"AC",
+        "IBGE":12
     },
-    "BR_AP" : {
-        "Name": "Amapá",
-        "Id": "AP",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Amazonas",
+        "Regiao":"Norte",
+        "Sigla":"AM",
+        "IBGE":13
     },
-    "BR_AM" : {
-        "Name": "Amazonas",
-        "Id": "AM",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Roraima",
+        "Regiao":"Norte",
+        "Sigla":"RR",
+        "IBGE":14
     },
-    "BR_BA" : {
-        "Name": "Bahia",
-        "Id": "BA",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Pará",
+        "Regiao":"Norte",
+        "Sigla":"PA",
+        "IBGE":15
     },
-    "BR_CE" : {
-        "Name": "Ceará",
-        "Id": "CE",
-        "Enabled": false
-    }, 
-    "BR_DF" : {
-        "Name": "Distrito Federal",
-        "Id": "DF",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Amapá",
+        "Regiao":"Norte",
+        "Sigla":"AP",
+        "IBGE":16
     },
-    "BR_ES" : {
-        "Name": "Espírito Santo",
-        "Id": "ES",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Tocantins",
+        "Regiao":"Norte",
+        "Sigla":"TO",
+        "IBGE":17
     },
-    "BR_GO" : {
-        "Name": "Goiás",
-        "Id": "GO",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Maranhão",
+        "Regiao":"Nordeste",
+        "Sigla":"MA",
+        "IBGE":21
     },
-    "BR_MA" : {
-        "Name": "Maranhão",
-        "Id": "MA",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Piauí",
+        "Regiao":"Nordeste",
+        "Sigla":"PI",
+        "IBGE":22
     },
-    "BR_MT" : {
-        "Name": "Mato Grosso",
-        "Id": "MT",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Ceará",
+        "Regiao":"Nordeste",
+        "Sigla":"CE",
+        "IBGE":23
     },
-    "BR_MS" : {
-        "Name": "Mato Grosso do Sul",
-        "Id": "MS",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Rio Grande do Norte",
+        "Regiao":"Nordeste",
+        "Sigla":"RN",
+        "IBGE":24
     },
-    "BR_MG" : {
-        "Name": "Minas Gerais",
-        "Id": "MG",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Paraíba",
+        "Regiao":"Nordeste",
+        "Sigla":"PB",
+        "IBGE":25
     },
-    "BR_PA" : {
-        "Name": "Pará",
-        "Id": "PA",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Pernambuco",
+        "Regiao":"Nordeste",
+        "Sigla":"PE",
+        "IBGE":26
     },
-    "BR_PB" : {
-        "Name": "Paraíba",
-        "Id": "PB",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Alagoas",
+        "Regiao":"Nordeste",
+        "Sigla":"AL",
+        "IBGE":27
     },
-    "BR_PR" : {
-        "Name": "Paraná",
-        "Id": "PR",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Sergipe",
+        "Regiao":"Nordeste",
+        "Sigla":"SE",
+        "IBGE":28
     },
-    "BR_PE" : {
-        "Name": "Pernambuco",
-        "Id": "PE",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Bahia",
+        "Regiao":"Nordeste",
+        "Sigla":"BA",
+        "IBGE":29
     },
-    "BR_PI" : {
-        "Name": "Piauí",
-        "Id": "PI",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Minas Gerais",
+        "Regiao":"Sudeste",
+        "Sigla":"MG",
+        "IBGE":31
     },
-    "BR_RJ" : {
-        "Name": "Rio de Janeiro",
-        "Id": "RJ",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Espirito Santo",
+        "Regiao":"Sudeste",
+        "Sigla":"ES",
+        "IBGE":32
     },
-    "BR_RN" : {
-        "Name": "Rio Grande do Norte",
-        "Id": "RN",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Rio de Janeiro",
+        "Regiao":"Sudeste",
+        "Sigla":"RJ",
+        "IBGE":33
     },
-    "BR_RS" : {
-        "Name": "Rio Grande do Sul",
-        "Id": "RS",
-        "Enabled": false
+    {
+        "Enabled":true,
+        "Estado":"São Paulo",
+        "Regiao":"Sudeste",
+        "Sigla":"SP",
+        "IBGE":35
     },
-    "BR_RO" : {
-        "Name": "Rondônia",
-        "Id": "RO",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Paraná",
+        "Regiao":"Sul",
+        "Sigla":"PR",
+        "IBGE":41
     },
-    "BR_RR" : {
-        "Name": "Roraima",
-        "Id": "RR",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Santa Catarina",
+        "Regiao":"Sul",
+        "Sigla":"SC",
+        "IBGE":42
     },
-    "BR_SC" : {
-        "Name": "Santa Catarina",
-        "Id": "SC",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Rio Grande do Sul",
+        "Regiao":"Sul",
+        "Sigla":"RS",
+        "IBGE":43
     },
-    "BR_SP" : {
-        "Name": "São Paulo",
-        "Id": "SP",
-        "Enabled": true
+    {
+        "Enabled":false,
+        "Estado":"Mato Grosso do Sul",
+        "Regiao":"Centro-Oeste",
+        "Sigla":"MS",
+        "IBGE":50
     },
-    "BR_SE" : {
-        "Name": "Sergipe",
-        "Id": "SE",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Mato Grosso",
+        "Regiao":"Centro-Oeste",
+        "Sigla":"MT",
+        "IBGE":51
     },
-    "BR_TO" : {
-        "Name": "Tocantins",
-        "Id": "TO",
-        "Enabled": false
+    {
+        "Enabled":false,
+        "Estado":"Goiás",
+        "Regiao":"Centro-Oeste",
+        "Sigla":"GO",
+        "IBGE":52
+    },
+    {
+        "Enabled":false,
+        "Estado":"Distrito Federal",
+        "Regiao":"Centro-Oeste",
+        "Sigla":"DF",
+        "IBGE":53
     }
-}
+]
