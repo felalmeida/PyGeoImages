@@ -1131,7 +1131,7 @@
     },
     {
         "CollectionId": "sentinel-1-grd",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel 1 Level-1 Ground Range Detected (GRD)",
@@ -1141,7 +1141,7 @@
     },
     {
         "CollectionId": "sentinel-1-rtc",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel 1 Radiometrically Terrain Corrected (RTC)",
@@ -1161,7 +1161,7 @@
     },
     {
         "CollectionId": "sentinel-3-olci-lfr-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Land (Full Resolution)",
@@ -1171,7 +1171,7 @@
     },
     {
         "CollectionId": "sentinel-3-olci-wfr-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Water (Full Resolution)",
@@ -1181,7 +1181,7 @@
     },
     {
         "CollectionId": "sentinel-3-slstr-frp-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Fire Radiative Power",
@@ -1191,7 +1191,7 @@
     },
     {
         "CollectionId": "sentinel-3-slstr-lst-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Land Surface Temperature",
@@ -1201,7 +1201,7 @@
     },
     {
         "CollectionId": "sentinel-3-slstr-wst-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Sea Surface Temperature",
@@ -1211,7 +1211,7 @@
     },
     {
         "CollectionId": "sentinel-3-sral-lan-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Land Radar Altimetry",
@@ -1221,7 +1221,7 @@
     },
     {
         "CollectionId": "sentinel-3-sral-wat-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Ocean Radar Altimetry",
@@ -1231,7 +1231,7 @@
     },
     {
         "CollectionId": "sentinel-3-synergy-aod-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Global Aerosol",
@@ -1241,7 +1241,7 @@
     },
     {
         "CollectionId": "sentinel-3-synergy-syn-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Land Surface Reflectance and Aerosol",
@@ -1251,7 +1251,7 @@
     },
     {
         "CollectionId": "sentinel-3-synergy-v10-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 10-Day Surface Reflectance and NDVI (SPOT VEGETATION)",
@@ -1261,7 +1261,7 @@
     },
     {
         "CollectionId": "sentinel-3-synergy-vg1-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 1-Day Surface Reflectance and NDVI (SPOT VEGETATION)",
@@ -1271,7 +1271,7 @@
     },
     {
         "CollectionId": "sentinel-3-synergy-vgp-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-3 Top of Atmosphere Reflectance (SPOT VEGETATION)",
@@ -1281,7 +1281,7 @@
     },
     {
         "CollectionId": "sentinel-5p-l2-netcdf",
-        "Enabled": true,
+        "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
         "Title": "Sentinel-5P Level-2",

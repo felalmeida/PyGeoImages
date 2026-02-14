@@ -20,72 +20,79 @@ MetaPath    = ThisPath+'meta/'
 DataPath    = ThisPath+'data/'
 
 if not os.path.exists(MetaPath): os.makedirs(MetaPath)
-if not os.path.exists(DataPath): os.makedirs(DataPath)
+#if not os.path.exists(DataPath): os.makedirs(DataPath)
 
-
-### Sources Config
-with open(ConfigPath+'Sources.json', 'r') as fConfigFile:
-    jSources = json.load(fConfigFile)
-if (len(jSources) > 0):
-    jSources = {key:val for key,val in jSources.items() if val['Enabled'] == True}
-
-### Enabled Brazilian States
-jStates = []
-with open(ConfigPath+'Estados_GeoJS.json', 'r') as fConfigFile:
-    jStatesGeoJS = json.load(fConfigFile)
-    jStatesGeoJS = jStatesGeoJS['features']
-
-with open(ConfigPath+'Estados.json', 'r') as fConfigFile:
-    jStatesAll = json.load(fConfigFile)
-
-for jState in jStatesAll:
-    if (jState['Enabled']):
-        jState['features'] = []
-        for StateGeo in jStatesGeoJS:
-            if (StateGeo['id'] == jState['Sigla']):
-                jState['features'].append(StateGeo)
-                break
-        jStates.append(jState)
-del jStatesAll
-del jStatesGeoJS
-
-### Enabled Brazilian Cities
-jCities = []
-with open(ConfigPath+'Municipios_GeoJS.json', 'r') as fConfigFile:
-    jCitiesGeoJS = json.load(fConfigFile)
-    jCitiesGeoJS = jCitiesGeoJS['features']
-
-with open(ConfigPath+'Municipios.json', 'r') as fConfigFile:
-    jCitiesAll = json.load(fConfigFile)
-
-for jCity in jCitiesAll:
-    if (jCity['Enabled']):
-        jCity['features'] = []
-        for CityGeo in jCitiesGeoJS:
-            if (int(CityGeo['properties']['id']) == int(jCity['Cod_Municipio_Completo'])):
-                jCity['features'].append(CityGeo)
-                break
-        jCities.append(jCity)
-del jCitiesAll
-del jCitiesGeoJS
-
-### Interests Areas For States
-gStatesInterestArea = []
+jSources = {}
 gStatesInterestBBOX = []
-for itState in jStates:
-    gStatesInterestArea.append(geojson.loads(json.dumps({'type':'FeatureCollection','features':itState['features']})))
-    gStatesInterestBBOX.append({'id':itState['Sigla'],'name':itState['Estado'],'bbox':turfpy.measurement.bbox(gStatesInterestArea[-1])})
-
-### Interests Areas For Cities
-gCitiesInterestArea = []
 gCitiesInterestBBOX = []
-for itCity in jCities:
-    gCitiesInterestArea.append(geojson.loads(json.dumps({'type':'FeatureCollection','features':itCity['features']})))
-    gCitiesInterestBBOX.append({'id':itCity['Cod_Municipio_Completo'],'name':itCity['Nome_Municipio'],'bbox':turfpy.measurement.bbox(gCitiesInterestArea[-1])})
+
+
+def EnvironmentSetup():
+    global ConfigPath, jSources, gStatesInterestBBOX, gCitiesInterestBBOX
+
+    ### Sources Config
+    with open(ConfigPath+'Sources.json', 'r') as fConfigFile:
+        jSources = json.load(fConfigFile)
+    if (len(jSources) > 0):
+        jSources = {key:val for key,val in jSources.items() if val['Enabled'] == True}
+
+    ### Enabled Brazilian States
+    jStates = []
+    with open(ConfigPath+'Estados_GeoJS.json', 'r') as fConfigFile:
+        jStatesGeoJS = json.load(fConfigFile)
+        jStatesGeoJS = jStatesGeoJS['features']
+
+    with open(ConfigPath+'Estados.json', 'r') as fConfigFile:
+        jStatesAll = json.load(fConfigFile)
+
+    for jState in jStatesAll:
+        if (jState['Enabled']):
+            jState['features'] = []
+            for StateGeo in jStatesGeoJS:
+                if (StateGeo['id'] == jState['Sigla']):
+                    jState['features'].append(StateGeo)
+                    break
+            jStates.append(jState)
+    del jStatesAll
+    del jStatesGeoJS
+
+    ### Enabled Brazilian Cities
+    jCities = []
+    with open(ConfigPath+'Municipios_GeoJS.json', 'r') as fConfigFile:
+        jCitiesGeoJS = json.load(fConfigFile)
+        jCitiesGeoJS = jCitiesGeoJS['features']
+
+    with open(ConfigPath+'Municipios.json', 'r') as fConfigFile:
+        jCitiesAll = json.load(fConfigFile)
+
+    for jCity in jCitiesAll:
+        if (jCity['Enabled']):
+            jCity['features'] = []
+            for CityGeo in jCitiesGeoJS:
+                if (int(CityGeo['properties']['id']) == int(jCity['Cod_Municipio_Completo'])):
+                    jCity['features'].append(CityGeo)
+                    break
+            jCities.append(jCity)
+    del jCitiesAll
+    del jCitiesGeoJS
+
+    ### Interests Areas For States
+    gStatesInterestArea = []
+    for itState in jStates:
+        gStatesInterestArea.append(geojson.loads(json.dumps({'type':'FeatureCollection','features':itState['features']})))
+        gStatesInterestBBOX.append({'id':itState['Sigla'],'name':itState['Estado'],'bbox':turfpy.measurement.bbox(gStatesInterestArea[-1])})
+    del gStatesInterestArea
+
+    ### Interests Areas For Cities
+    gCitiesInterestArea = []
+    for itCity in jCities:
+        gCitiesInterestArea.append(geojson.loads(json.dumps({'type':'FeatureCollection','features':itCity['features']})))
+        gCitiesInterestBBOX.append({'id':itCity['Cod_Municipio_Completo'],'name':itCity['Nome_Municipio'],'bbox':turfpy.measurement.bbox(gCitiesInterestArea[-1])})
+    del gCitiesInterestArea
 
 
 def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUpdateCatallog=False):
-    global MetaPath, DataPath, jSources, gCitiesInterestBBOX
+    global MetaPath, jSources, gCitiesInterestBBOX
 
     SourceData = jSources[v_Source]
     MetaFileName = os.path.realpath(MetaPath+SourceData['SysName']+'_'+'Collections.meta.json')
@@ -148,7 +155,7 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
             CatSearch = planetarycomputer_catalog.search(collections=[CollectionId], bbox=gInterestBBOX['bbox'], datetime=dtRangeStr)
             for CatSearchItem in CatSearch.items_as_dicts():
                 dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime']).date()
-                SavePath = os.path.realpath(DataPath+CollectionId+'/'+str(gInterestBBOX['id'])+'/'+dtItem.strftime("%Y/%m/%d"))
+                SavePath = os.path.realpath(MetaPath+CollectionId+'/'+str(gInterestBBOX['id'])+'/'+dtItem.strftime("%Y/%m/%d"))
                 os.makedirs(SavePath, exist_ok=True)
                 with open(SavePath+'/'+CatSearchItem['id']+'.json','w') as fConfigFile:
                     fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
@@ -157,11 +164,13 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
 def MainProcess():
     global jSources
 
+    EnvironmentSetup()
+
     dtLoopEnd   = datetime.datetime.now().replace(hour=23, minute=59, second=59, microsecond=0)
     dtLoopStart = (dtLoopEnd.replace(hour=0, minute=0, second=0, day=1, month=1) - datetime.timedelta(days=1)).replace(day=1, month=1) # Get First Day of past Year
 
     # Just for DEV Tests
-    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=14)
+    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=1)
 
     for Source in jSources:
         if (jSources[Source]['SysName'] == 'PlanetaryComputer'):
