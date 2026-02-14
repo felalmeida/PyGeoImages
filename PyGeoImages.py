@@ -13,14 +13,20 @@ import pystac_client
 import planetary_computer
 import geojson
 import turfpy.measurement
+import pymongo
 
 ThisPath    = os.path.dirname(__file__)+'/'
 ConfigPath  = ThisPath+'config/'
 MetaPath    = ThisPath+'meta/'
 DataPath    = ThisPath+'data/'
+FieldDelim  = ';'
 
 if not os.path.exists(MetaPath): os.makedirs(MetaPath)
 #if not os.path.exists(DataPath): os.makedirs(DataPath)
+
+MongoObj    = pymongo.MongoClient('172.17.0.1',27017)
+MongoDb     = MongoObj['PyGeoImages']
+MongoAlb    = MongoDb['PyGeoImagesAlb']
 
 jSources = {}
 gStatesInterestBBOX = []
@@ -92,7 +98,7 @@ def EnvironmentSetup():
 
 
 def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUpdateCatallog=False):
-    global MetaPath, jSources, gCitiesInterestBBOX
+    global MetaPath, jSources, gCitiesInterestBBOX, FieldDelim, MongoAlb
 
     SourceData = jSources[v_Source]
     MetaFileName = os.path.realpath(MetaPath+SourceData['SysName']+'_'+'Collections.meta.json')
@@ -127,6 +133,7 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
                 'Enabled':ItEnabled,
                 '_dt_update':datetime.datetime.now(datetime.UTC).astimezone().isoformat(),
                 '_ts_update':int(datetime.datetime.now(datetime.UTC).timestamp()),
+                '_id':DctCollection['id'],
                 'Source':v_Source,
                 'CollectionId':DctCollection['id'],
                 'Title':DctCollection['title'],
@@ -148,17 +155,43 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
             if (Collections['Enabled'] == True):
                 jCollections.append(Collections)
 
+    ### Get Metadata for Selected Dates, Collections and Interests BBOX
     for collection in jCollections:
         CollectionId = collection['CollectionId']
         for gInterestBBOX in gCitiesInterestBBOX:
-            print(dtRangeStr, CollectionId, gInterestBBOX['name'])
             CatSearch = planetarycomputer_catalog.search(collections=[CollectionId], bbox=gInterestBBOX['bbox'], datetime=dtRangeStr)
             for CatSearchItem in CatSearch.items_as_dicts():
+                CatSearchItem['_id'] = CatSearchItem['id']
+                CatSearchItem['_dt_update'] = datetime.datetime.now(datetime.UTC).astimezone().isoformat()
+                CatSearchItem['_ts_update'] = int(datetime.datetime.now(datetime.UTC).timestamp())
+                CatSearchItem['_query'] = {
+                    'collection':CollectionId,
+                    'InterestBBOX_id':gInterestBBOX['id'],
+                    'InterestBBOX_name':gInterestBBOX['name'],
+                    'datetime':dtRangeStr
+                }
                 dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime']).date()
-                SavePath = os.path.realpath(MetaPath+CollectionId+'/'+str(gInterestBBOX['id'])+'/'+dtItem.strftime("%Y/%m/%d"))
-                os.makedirs(SavePath, exist_ok=True)
-                with open(SavePath+'/'+CatSearchItem['id']+'.json','w') as fConfigFile:
-                    fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
+                SavePath = os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/'+str(gInterestBBOX['id']))
+                FileName = SavePath+'/'+CatSearchItem['id']+'.json'
+
+                ### Search For Duplicated Files
+                bFileExists = False
+                ActualFileName = FileName
+                for root, dirs, files in os.walk(os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/')):
+                    if CatSearchItem['id']+'.json' in files:
+                        bFileExists = True
+                        ActualFileName = os.path.join(root, CatSearchItem['id']+'.json')
+                CatSearchItem['_filename'] = ActualFileName
+
+                ### Save Reference Only
+                print(dtRangeStr+FieldDelim+CollectionId+FieldDelim+str(gInterestBBOX['id'])+FieldDelim+ActualFileName)
+
+                ### Save File Locally
+                if (not bFileExists):
+                    # MongoAlb.insert_one(CatSearchItem)
+                    os.makedirs(SavePath, exist_ok=True)
+                    with open(FileName,'w') as fConfigFile:
+                        fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
 
 
 def MainProcess():
@@ -174,7 +207,7 @@ def MainProcess():
 
     for Source in jSources:
         if (jSources[Source]['SysName'] == 'PlanetaryComputer'):
-            PlanetaryComputer(Source, dtLoopStart, dtLoopEnd)
+            PlanetaryComputer(Source, dtLoopStart, dtLoopEnd, False)
 
 
 def main():
