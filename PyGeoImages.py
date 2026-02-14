@@ -170,7 +170,7 @@ def MainProcess():
     dtLoopStart = (dtLoopEnd.replace(hour=0, minute=0, second=0, day=1, month=1) - datetime.timedelta(days=1)).replace(day=1, month=1) # Get First Day of past Year
 
     # Just for DEV Tests
-    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=1)
+    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=2)
 
     for Source in jSources:
         if (jSources[Source]['SysName'] == 'PlanetaryComputer'):
