@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 ###############################################################################
 # Module:   PyGeoImages.py          Autor: Felipe Almeida                     #
-# Start:    05-Feb-2026             LastUpdate: 05-Feb-2026     Version: 1.0  #
+# Start:    05-Feb-2026             LastUpdate: 15-Feb-2026     Version: 1.0  #
 ###############################################################################
 
 import sys
@@ -13,24 +13,41 @@ import pystac_client
 import planetary_computer
 import geojson
 import turfpy.measurement
+import hashlib
 import pymongo
 
 ThisPath    = os.path.dirname(__file__)+'/'
 ConfigPath  = ThisPath+'config/'
 MetaPath    = ThisPath+'meta/'
-DataPath    = ThisPath+'data/'
-FieldDelim  = ';'
+LogPath     = ThisPath+'log/'
+FieldDelim  = ','
 
 if not os.path.exists(MetaPath): os.makedirs(MetaPath)
-#if not os.path.exists(DataPath): os.makedirs(DataPath)
+if not os.path.exists(LogPath): os.makedirs(LogPath)
 
-MongoObj    = pymongo.MongoClient('172.17.0.1',27017)
-MongoDb     = MongoObj['PyGeoImages']
-MongoAlb    = MongoDb['PyGeoImagesAlb']
-
+ExecutionId = ''
+ExecutionDt = ''
 jSources = {}
 gStatesInterestBBOX = []
 gCitiesInterestBBOX = []
+
+
+def DictArrayToCsv(v_jArray, v_FieldDelim=','):
+    CsvHeader = v_jArray[0].keys()
+    CsvHeader = [Field for Field in CsvHeader if Field[0] != '_']
+    CsvHeaderStr = v_FieldDelim.join(CsvHeader)+'\n'
+
+    CsvBody = ''
+    for jItem in v_jArray:
+        CsvLine = ''
+        for Field in CsvHeader:
+            if Field in jItem.keys():
+                CsvLine += str(jItem[Field]) + v_FieldDelim
+        CsvLine = CsvLine[:-1]
+        CsvLine += '\n'
+        CsvBody += CsvLine
+
+    return CsvHeaderStr+CsvBody
 
 
 def EnvironmentSetup():
@@ -98,7 +115,7 @@ def EnvironmentSetup():
 
 
 def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUpdateCatallog=False):
-    global MetaPath, jSources, gCitiesInterestBBOX, FieldDelim, MongoAlb
+    global ExecutionId, ExecutionDt, MetaPath, LogPath, jSources, gCitiesInterestBBOX, FieldDelim
 
     SourceData = jSources[v_Source]
     MetaFileName = os.path.realpath(MetaPath+SourceData['SysName']+'_'+'Collections.meta.json')
@@ -156,6 +173,7 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
                 jCollections.append(Collections)
 
     ### Get Metadata for Selected Dates, Collections and Interests BBOX
+    LogDataArr = []
     for collection in jCollections:
         CollectionId = collection['CollectionId']
         for gInterestBBOX in gCitiesInterestBBOX:
@@ -183,19 +201,34 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
                         ActualFileName = os.path.join(root, CatSearchItem['id']+'.json')
                 CatSearchItem['_filename'] = ActualFileName
 
-                ### Save Reference Only
-                print(dtRangeStr+FieldDelim+CollectionId+FieldDelim+str(gInterestBBOX['id'])+FieldDelim+ActualFileName)
+                ### Save Reference Log File
+                jLogData = {
+                    'ExecutionId':ExecutionId,
+                    'ExecutionDt':ExecutionDt,
+                    'CollectionId':CollectionId,
+                    'InterestBBOXId':gInterestBBOX['id'],
+                    'InterestBBOXName':gInterestBBOX['name'],
+                    'dtRangeStr':dtRangeStr,
+                    'dtItem':dtItem.isoformat(),
+                    'FileName':ActualFileName
+                }
+                LogDataArr.append(jLogData)
 
                 ### Save File Locally
                 if (not bFileExists):
-                    # MongoAlb.insert_one(CatSearchItem)
                     os.makedirs(SavePath, exist_ok=True)
                     with open(FileName,'w') as fConfigFile:
                         fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
 
+    with open(os.path.realpath(LogPath+ExecutionId+'.csv'),'w') as fCsvLogFile:
+        fCsvLogFile.write(DictArrayToCsv(LogDataArr, FieldDelim))
+
 
 def MainProcess():
-    global jSources
+    global ExecutionId, ExecutionDt, jSources
+
+    ExecutionDt = datetime.datetime.now(datetime.UTC).astimezone().isoformat()
+    ExecutionId = str(hashlib.md5((ExecutionDt).encode('UTF-8')).hexdigest())
 
     EnvironmentSetup()
 
@@ -203,7 +236,7 @@ def MainProcess():
     dtLoopStart = (dtLoopEnd.replace(hour=0, minute=0, second=0, day=1, month=1) - datetime.timedelta(days=1)).replace(day=1, month=1) # Get First Day of past Year
 
     # Just for DEV Tests
-    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=2)
+    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=7)
 
     for Source in jSources:
         if (jSources[Source]['SysName'] == 'PlanetaryComputer'):
