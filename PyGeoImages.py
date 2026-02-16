@@ -14,14 +14,17 @@ import planetary_computer
 import geojson
 import turfpy.measurement
 import hashlib
+import pika
 
 ThisPath    = os.path.dirname(__file__)+'/'
 ConfigPath  = ThisPath+'config/'
 MetaPath    = ThisPath+'meta/'
+DataPath    = ThisPath+'data/'
 LogPath     = ThisPath+'log/'
 FieldDelim  = ','
 
 if not os.path.exists(MetaPath): os.makedirs(MetaPath)
+if not os.path.exists(DataPath): os.makedirs(DataPath)
 if not os.path.exists(LogPath): os.makedirs(LogPath)
 
 ExecutionId = ''
@@ -29,6 +32,10 @@ ExecutionDt = ''
 jSources = {}
 gStatesInterestBBOX = []
 gCitiesInterestBBOX = []
+
+MsgConn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+MsgChannelPublish = MsgConn.channel()
+MsgChannelPublish.queue_declare(queue='PyGeoImages', durable=True)
 
 
 def DictArrayToCsv(v_jArray, v_FieldDelim=','):
@@ -113,8 +120,8 @@ def EnvironmentSetup():
     del gCitiesInterestArea
 
 
-def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUpdateCatallog=False):
-    global ExecutionId, ExecutionDt, MetaPath, LogPath, jSources, gCitiesInterestBBOX, FieldDelim
+def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUpdateCatallog=False):
+    global ExecutionId, ExecutionDt, MetaPath, DataPath, LogPath, jSources, gCitiesInterestBBOX, FieldDelim
 
     SourceData = jSources[v_Source]
     MetaFileName = os.path.realpath(MetaPath+SourceData['SysName']+'_'+'Collections.meta.json')
@@ -212,7 +219,7 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
                     'FileName':CatSearchItem['_filename']
                 }
                 LogDataArr.append(jLogData)
-                print(json.dumps(jLogData,indent=4,sort_keys=True))
+                #print(json.dumps(jLogData,indent=4,sort_keys=True))
 
                 ### Save File Locally
                 if (not bFileExists):
@@ -225,28 +232,75 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
         fCsvLogFile.write(DictArrayToCsv(LogDataArr, FieldDelim))
 
 
+def ProcessPlanetaryComputer():
+    global ExecutionId, LogPath, MetaPath, FieldDelim, MsgChannelPublish
+
+    with open(LogPath+ExecutionId+'.csv', 'r') as fCsvLogFile:
+        LogFile = fCsvLogFile.read()
+
+    UniqFiles = []
+    CsvHEader = LogFile.split('\n')[0].split(FieldDelim)
+    for CsvLine in LogFile.split('\n')[1:]:
+        if (len(CsvLine) == 0):
+            continue
+        CsvItems = CsvLine.split(FieldDelim)
+        UniqFiles.append(CsvItems[-1])
+    UniqFiles = set(UniqFiles)
+
+    ArrFilesToDownload = []
+    for MetFile in UniqFiles:
+        with open(os.path.realpath(MetFile), 'r') as fJsonMetaFIle:
+            jMetaFile = json.load(fJsonMetaFIle)
+            for jAssets in jMetaFile['assets']:
+                FileAssets = jMetaFile['assets'][jAssets]
+                if ('image' in FileAssets['type']):
+                    ArrFilesToDownload.append({
+                        'ExecutionId':ExecutionId,
+                        'MetFile':MetFile,
+                        'AssetName':jAssets,
+                        'AssetTitle':FileAssets['title'],
+                        'AssetType':FileAssets['type'],
+                        'HrefLink':FileAssets['href']
+                    })
+
+    ### Verify Existent Files Before RabbitMQ
+
+    for jDonFile in ArrFilesToDownload:
+        MsgChannelPublish.basic_publish (
+            exchange='',
+            routing_key='PyGeoImages',
+            body=json.dumps(jDonFile),
+            properties=pika.BasicProperties(delivery_mode=2)
+        )
+
+
 def MainProcess():
     global ExecutionId, ExecutionDt, jSources
 
     ExecutionDt = datetime.datetime.now(datetime.UTC).astimezone().isoformat()
     ExecutionId = str(hashlib.md5((ExecutionDt).encode('UTF-8')).hexdigest())
 
-    EnvironmentSetup()
-
     dtLoopEnd   = datetime.datetime.now().replace(hour=23, minute=59, second=59, microsecond=0)
     dtLoopStart = (dtLoopEnd.replace(hour=0, minute=0, second=0, day=1, month=1) - datetime.timedelta(days=1)).replace(day=1, month=1) # Get First Day of past Year
 
     # Just for DEV Tests
     dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=7)
+    ExecutionId = '524ca49e81544e6e19a0c9e16091ecda'
+
+    EnvironmentSetup()
 
     for Source in jSources:
         if (jSources[Source]['SysName'] == 'PlanetaryComputer'):
-            PlanetaryComputer(Source, dtLoopStart, dtLoopEnd, False)
+            # GetPlanetaryComputer(Source, dtLoopStart, dtLoopEnd, False)
+            ProcessPlanetaryComputer()
 
 
 def main():
+    global MsgConn
+
     try:
         MainProcess()
+        MsgConn.close()
         sys.exit(0)
     except KeyboardInterrupt:
         print("Py Geo Images Interrupted!")
