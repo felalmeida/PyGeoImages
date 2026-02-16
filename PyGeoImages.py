@@ -14,7 +14,6 @@ import planetary_computer
 import geojson
 import turfpy.measurement
 import hashlib
-import pymongo
 
 ThisPath    = os.path.dirname(__file__)+'/'
 ConfigPath  = ThisPath+'config/'
@@ -188,7 +187,7 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
                     'InterestBBOX_name':gInterestBBOX['name'],
                     'datetime':dtRangeStr
                 }
-                dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime']).date()
+                dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime'])
                 SavePath = os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/'+str(gInterestBBOX['id']))
                 FileName = SavePath+'/'+CatSearchItem['id']+'.json'
 
@@ -201,7 +200,7 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
                         ActualFileName = os.path.join(root, CatSearchItem['id']+'.json')
                 CatSearchItem['_filename'] = ActualFileName
 
-                ### Save Reference Log File
+                ### Save Reference Log to Array
                 jLogData = {
                     'ExecutionId':ExecutionId,
                     'ExecutionDt':ExecutionDt,
@@ -210,9 +209,10 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
                     'InterestBBOXName':gInterestBBOX['name'],
                     'dtRangeStr':dtRangeStr,
                     'dtItem':dtItem.isoformat(),
-                    'FileName':ActualFileName
+                    'FileName':CatSearchItem['_filename']
                 }
                 LogDataArr.append(jLogData)
+                print(json.dumps(jLogData,indent=4,sort_keys=True))
 
                 ### Save File Locally
                 if (not bFileExists):
@@ -220,6 +220,7 @@ def PlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUp
                     with open(FileName,'w') as fConfigFile:
                         fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
 
+    ### Save Log File (as CSV)
     with open(os.path.realpath(LogPath+ExecutionId+'.csv'),'w') as fCsvLogFile:
         fCsvLogFile.write(DictArrayToCsv(LogDataArr, FieldDelim))
 
