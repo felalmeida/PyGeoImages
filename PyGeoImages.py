@@ -15,16 +15,17 @@ import geojson
 import turfpy.measurement
 import hashlib
 import pika
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 ThisPath    = os.path.dirname(__file__)+'/'
 ConfigPath  = ThisPath+'config/'
 MetaPath    = ThisPath+'meta/'
-DataPath    = ThisPath+'data/'
 LogPath     = ThisPath+'log/'
 FieldDelim  = ','
 
 if not os.path.exists(MetaPath): os.makedirs(MetaPath)
-if not os.path.exists(DataPath): os.makedirs(DataPath)
 if not os.path.exists(LogPath): os.makedirs(LogPath)
 
 ExecutionId = ''
@@ -33,9 +34,9 @@ jSources = {}
 gStatesInterestBBOX = []
 gCitiesInterestBBOX = []
 
-MsgConn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-MsgChannelPublish = MsgConn.channel()
-MsgChannelPublish.queue_declare(queue='PyGeoImages', durable=True)
+#MsgConnection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+#MsgChannelPublish = MsgConnection.channel()
+#MsgChannelPublish.queue_declare(queue='PyGeoImages', durable=True)
 
 
 def DictArrayToCsv(v_jArray, v_FieldDelim=','):
@@ -120,8 +121,24 @@ def EnvironmentSetup():
     del gCitiesInterestArea
 
 
+def CreateRetrySession(retries=3, backoff_factor=1, status_forcelist=(429, 500, 502, 503, 504)):
+    session = requests.Session()
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist,
+        allowed_methods=["HEAD", "GET", "POST"]
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    return session
+
+
 def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUpdateCatallog=False):
-    global ExecutionId, ExecutionDt, MetaPath, DataPath, LogPath, jSources, gCitiesInterestBBOX, FieldDelim
+    global ExecutionId, ExecutionDt, MetaPath, LogPath, jSources, gCitiesInterestBBOX, FieldDelim
 
     SourceData = jSources[v_Source]
     MetaFileName = os.path.realpath(MetaPath+SourceData['SysName']+'_'+'Collections.meta.json')
@@ -130,6 +147,7 @@ def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_
     planetarycomputer_catalog = pystac_client.Client.open(
         "https://planetarycomputer.microsoft.com/api/stac/v1",
         modifier=planetary_computer.sign_inplace)
+    planetarycomputer_catalog._stac_io.session = CreateRetrySession(retries=3, backoff_factor=1)
 
     if (v_bUpdateCatallog):
         ### Organize Collections in Meta File Keeping Enable Status
@@ -183,49 +201,52 @@ def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_
     for collection in jCollections:
         CollectionId = collection['CollectionId']
         for gInterestBBOX in gCitiesInterestBBOX:
-            CatSearch = planetarycomputer_catalog.search(collections=[CollectionId], bbox=gInterestBBOX['bbox'], datetime=dtRangeStr)
-            for CatSearchItem in CatSearch.items_as_dicts():
-                CatSearchItem['_id'] = CatSearchItem['id']
-                CatSearchItem['_dt_update'] = datetime.datetime.now(datetime.UTC).astimezone().isoformat()
-                CatSearchItem['_ts_update'] = int(datetime.datetime.now(datetime.UTC).timestamp())
-                CatSearchItem['_query'] = {
-                    'collection':CollectionId,
-                    'InterestBBOX_id':gInterestBBOX['id'],
-                    'InterestBBOX_name':gInterestBBOX['name'],
-                    'datetime':dtRangeStr
-                }
-                dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime'])
-                SavePath = os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/'+str(gInterestBBOX['id']))
-                FileName = SavePath+'/'+CatSearchItem['id']+'.json'
+            try:
+                CatSearch = planetarycomputer_catalog.search(collections=[CollectionId], bbox=gInterestBBOX['bbox'], datetime=dtRangeStr)
+                for CatSearchItem in CatSearch.items_as_dicts():
+                    CatSearchItem['_id'] = CatSearchItem['id']
+                    CatSearchItem['_dt_update'] = datetime.datetime.now(datetime.UTC).astimezone().isoformat()
+                    CatSearchItem['_ts_update'] = int(datetime.datetime.now(datetime.UTC).timestamp())
+                    CatSearchItem['_query'] = {
+                        'collection':CollectionId,
+                        'InterestBBOX_id':gInterestBBOX['id'],
+                        'InterestBBOX_name':gInterestBBOX['name'],
+                        'datetime':dtRangeStr
+                    }
+                    dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime'])
+                    SavePath = os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/'+str(gInterestBBOX['id']))
+                    FileName = SavePath+'/'+CatSearchItem['id']+'.json'
 
-                ### Search For Duplicated Files
-                bFileExists = False
-                ActualFileName = FileName
-                for root, dirs, files in os.walk(os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/')):
-                    if CatSearchItem['id']+'.json' in files:
-                        bFileExists = True
-                        ActualFileName = os.path.join(root, CatSearchItem['id']+'.json')
-                CatSearchItem['_filename'] = ActualFileName
+                    ### Search For Duplicated Files
+                    bFileExists = False
+                    ActualFileName = FileName
+                    for root, dirs, files in os.walk(os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/')):
+                        if CatSearchItem['id']+'.json' in files:
+                            bFileExists = True
+                            ActualFileName = os.path.join(root, CatSearchItem['id']+'.json')
+                    CatSearchItem['_filename'] = ActualFileName
 
-                ### Save Reference Log to Array
-                jLogData = {
-                    'ExecutionId':ExecutionId,
-                    'ExecutionDt':ExecutionDt,
-                    'CollectionId':CollectionId,
-                    'InterestBBOXId':gInterestBBOX['id'],
-                    'InterestBBOXName':gInterestBBOX['name'],
-                    'dtRangeStr':dtRangeStr,
-                    'dtItem':dtItem.isoformat(),
-                    'FileName':CatSearchItem['_filename']
-                }
-                LogDataArr.append(jLogData)
-                #print(json.dumps(jLogData,indent=4,sort_keys=True))
+                    ### Save Reference Log to Array
+                    jLogData = {
+                        'ExecutionId':ExecutionId,
+                        'ExecutionDt':ExecutionDt,
+                        'CollectionId':CollectionId,
+                        'InterestBBOXId':gInterestBBOX['id'],
+                        'InterestBBOXName':gInterestBBOX['name'],
+                        'dtRangeStr':dtRangeStr,
+                        'dtItem':dtItem.isoformat(),
+                        'FileName':CatSearchItem['_filename']
+                    }
+                    LogDataArr.append(jLogData)
 
-                ### Save File Locally
-                if (not bFileExists):
-                    os.makedirs(SavePath, exist_ok=True)
-                    with open(FileName,'w') as fConfigFile:
-                        fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
+                    ### Save File Locally
+                    if (not bFileExists):
+                        os.makedirs(SavePath, exist_ok=True)
+                        with open(FileName,'w') as fConfigFile:
+                            fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
+            except requests.exceptions.RequestException as e:
+                print(f"[ERRO] Falha ao buscar {CollectionId} para {gInterestBBOX['name']}: {e}")
+                continue
 
     ### Save Log File (as CSV)
     with open(os.path.realpath(LogPath+ExecutionId+'.csv'),'w') as fCsvLogFile:
@@ -233,7 +254,7 @@ def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_
 
 
 def ProcessPlanetaryComputer():
-    global ExecutionId, LogPath, MetaPath, FieldDelim, MsgChannelPublish
+    global ExecutionId, LogPath, MetaPath, FieldDelim
 
     with open(LogPath+ExecutionId+'.csv', 'r') as fCsvLogFile:
         LogFile = fCsvLogFile.read()
@@ -248,15 +269,15 @@ def ProcessPlanetaryComputer():
     UniqFiles = set(UniqFiles)
 
     ArrFilesToDownload = []
-    for MetFile in UniqFiles:
-        with open(os.path.realpath(MetFile), 'r') as fJsonMetaFIle:
+    for MetaFile in UniqFiles:
+        with open(os.path.realpath(MetaFile), 'r') as fJsonMetaFIle:
             jMetaFile = json.load(fJsonMetaFIle)
             for jAssets in jMetaFile['assets']:
                 FileAssets = jMetaFile['assets'][jAssets]
                 if ('image' in FileAssets['type']):
                     ArrFilesToDownload.append({
                         'ExecutionId':ExecutionId,
-                        'MetFile':MetFile,
+                        'MetaFile':MetaFile,
                         'AssetName':jAssets,
                         'AssetTitle':FileAssets['title'],
                         'AssetType':FileAssets['type'],
@@ -265,13 +286,14 @@ def ProcessPlanetaryComputer():
 
     ### Verify Existent Files Before RabbitMQ
 
-    for jDonFile in ArrFilesToDownload:
-        MsgChannelPublish.basic_publish (
-            exchange='',
-            routing_key='PyGeoImages',
-            body=json.dumps(jDonFile),
-            properties=pika.BasicProperties(delivery_mode=2)
-        )
+    for jDonFile in ArrFilesToDownload[:3]:
+        print(jDonFile)
+        # MsgChannelPublish.basic_publish (
+        #     exchange='',
+        #     routing_key='PyGeoImages',
+        #     body=json.dumps(jDonFile),
+        #     properties=pika.BasicProperties(delivery_mode=2)
+        # )
 
 
 def MainProcess():
@@ -282,25 +304,30 @@ def MainProcess():
 
     dtLoopEnd   = datetime.datetime.now().replace(hour=23, minute=59, second=59, microsecond=0)
     dtLoopStart = (dtLoopEnd.replace(hour=0, minute=0, second=0, day=1, month=1) - datetime.timedelta(days=1)).replace(day=1, month=1) # Get First Day of past Year
+    dtWeekDay   = dtLoopEnd.date().isoweekday()
+
+    bUpdateCatallog = False
+    if (dtWeekDay == 2):
+        bUpdateCatallog = True
 
     # Just for DEV Tests
     dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=7)
-    ExecutionId = '524ca49e81544e6e19a0c9e16091ecda'
+    #ExecutionId = '3141ddf9f50ac558bceed87f07d5ca78'
 
     EnvironmentSetup()
 
     for Source in jSources:
         if (jSources[Source]['SysName'] == 'PlanetaryComputer'):
-            # GetPlanetaryComputer(Source, dtLoopStart, dtLoopEnd, False)
+            GetPlanetaryComputer(Source, dtLoopStart, dtLoopEnd, bUpdateCatallog)
             ProcessPlanetaryComputer()
 
 
 def main():
-    global MsgConn
+    global MsgConnection
 
     try:
         MainProcess()
-        MsgConn.close()
+        MsgConnection.close()
         sys.exit(0)
     except KeyboardInterrupt:
         print("Py Geo Images Interrupted!")
