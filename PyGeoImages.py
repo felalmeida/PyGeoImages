@@ -34,9 +34,9 @@ jSources = {}
 gStatesInterestBBOX = []
 gCitiesInterestBBOX = []
 
-#MsgConnection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-#MsgChannelPublish = MsgConnection.channel()
-#MsgChannelPublish.queue_declare(queue='PyGeoImages', durable=True)
+# MsgConnection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+# MsgChannelPublish = MsgConnection.channel()
+# MsgChannelPublish.queue_declare(queue='PyGeoImages', durable=True)
 
 
 def DictArrayToCsv(v_jArray, v_FieldDelim=','):
@@ -254,7 +254,7 @@ def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_
 
 
 def ProcessPlanetaryComputer():
-    global ExecutionId, LogPath, MetaPath, FieldDelim
+    global ExecutionId, LogPath, MetaPath, FieldDelim #, MsgChannelPublish
 
     with open(LogPath+ExecutionId+'.csv', 'r') as fCsvLogFile:
         LogFile = fCsvLogFile.read()
@@ -323,6 +323,8 @@ def MainProcess():
 
 
 def main():
+    # global MsgConnection
+
     try:
         MainProcess()
         #MsgConnection.close()
