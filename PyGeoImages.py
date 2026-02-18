@@ -323,11 +323,9 @@ def MainProcess():
 
 
 def main():
-    global MsgConnection
-
     try:
         MainProcess()
-        MsgConnection.close()
+        #MsgConnection.close()
         sys.exit(0)
     except KeyboardInterrupt:
         print("Py Geo Images Interrupted!")
