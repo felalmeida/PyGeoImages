@@ -14,6 +14,7 @@ packaging==26.0
 pandas==3.0.0
 pika==1.3.2
 planetary-computer==1.0.0
+psycopg2-binary
 pydantic==2.12.5
 pydantic_core==2.41.5
 pymongo==4.16.0
