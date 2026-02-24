@@ -15,6 +15,7 @@ import geojson
 import turfpy.measurement
 import hashlib
 import pika
+import pymongo
 import requests
 import dotenv
 import psycopg2
@@ -30,11 +31,8 @@ FieldDelim  = ','
 if not os.path.exists(MetaPath): os.makedirs(MetaPath)
 if not os.path.exists(LogPath): os.makedirs(LogPath)
 
-# MgOBJ_CONN = None
-PgSQL_CONN = None
-PgSQL_CURS = None
-Msg_Rabiit = None
-MsgChannelPublish = None
+PgSQL = None
+MgObj = None
 RabiitMQ = None
 
 ExecutionId = ''
@@ -62,42 +60,86 @@ def DictArrayToCsv(v_jArray, v_FieldDelim=','):
     return CsvHeaderStr+CsvBody
 
 
+def CsvToDictArray(v_CsvStr, v_FieldDelim=','):
+    CsvLines = v_CsvStr.split('\n')
+    CsvHeader = CsvLines[0].split(v_FieldDelim)
+    DictArray = []
+    for CsvLine in CsvLines[1:]:
+        if (len(CsvLine) == 0):
+            continue
+        CsvItems = CsvLine.split(v_FieldDelim)
+        jItem = {}
+        for i, Field in enumerate(CsvHeader):
+            jItem[Field] = CsvItems[i]
+        DictArray.append(jItem)
+
+    return DictArray
+
+
 def EnvironmentSetup():
-    global PgSQL_CONN, PgSQL_CURS, Msg_Rabiit, MsgChannelPublish, RabiitMQ, ConfigPath, jSources, gStatesInterestBBOX, gCitiesInterestBBOX
+    global PgSQL, MgObj, RabiitMQ, ConfigPath, jSources, gStatesInterestBBOX, gCitiesInterestBBOX
 
     ### Env Variables
     dotenv.load_dotenv()
-    PostgreSQL = {
-        'HOST': os.getenv('PgSQL_HOST', ''),
-        'PORT': int(os.getenv('PgSQL_PORT', 0)),
-        'USER': os.getenv('PgSQL_USER', ''),
-        'PASS': os.getenv('PgSQL_PASS', ''),
-        'NAME': os.getenv('PgSQL_NAME', ''),
-        'DEBUB': os.getenv('PgSQL_DEBUB', 'False') == "True"
+    PgSQL = {
+        'HOST': os.getenv('PgSQL_HOST', 'localhost'),
+        'PORT': int(os.getenv('PgSQL_PORT', '5432')),
+        'USER': os.getenv('PgSQL_USER', 'user'),
+        'PASS': os.getenv('PgSQL_PASS', 'pass'),
+        'NAME': os.getenv('PgSQL_NAME', 'dbname'),
+        'ENABLE': os.getenv('PgSQL_ENABLE', 'False') == 'True',
+        'CONN':None,
+        'CURS':None
+    }
+    MgObj = {
+        'HOST': os.getenv('MgOBJ_HOST', 'localhost'),
+        'PORT': int(os.getenv('MgOBJ_PORT', '27017')),
+        'USER': os.getenv('MgOBJ_USER', 'user'),
+        'PASS': os.getenv('MgOBJ_PASS', 'pass'),
+        'NAME': os.getenv('MgOBJ_NAME', 'dbname'),
+        'ENABLE': os.getenv('MgOBJ_ENABLE', 'False') == 'True',
+        'CONN':None,
+        'DB':None
     }
     RabiitMQ = {
         'HOST': os.getenv('Msg_Rabiit_HOST', 'localhost'),
         'PORT': int(os.getenv('Msg_Rabiit_PORT', '5672')),
-        'QUEUE': os.getenv('Msg_Rabiit_QUEUE', 'rabbimq_queue')
+        'QUEUE': os.getenv('Msg_Rabiit_QUEUE', 'rabbimq_queue'),
+        'RoutingKey': os.getenv('Msg_Rabiit_RoutingKey', 'routing_key'),
+        'ENABLE': os.getenv('Msg_Rabiit_ENABLE', 'False') == 'True',
+        'CONN':None,
+        'CHANNEL':None
     }
 
     ### Postgre Database
-    PgSQL_CONN = psycopg2.connect (
-        host=PostgreSQL['HOST'],
-        port=PostgreSQL['PORT'],
-        user=PostgreSQL['USER'],
-        password=PostgreSQL['PASS'],
-        dbname=PostgreSQL['NAME']
-    )
-    PgSQL_CURS = PgSQL_CONN.cursor()
+    if (PgSQL['ENABLE']):
+        PgSQL['CONN'] = psycopg2.connect (
+            host=PgSQL['HOST'],
+            port=PgSQL['PORT'],
+            user=PgSQL['USER'],
+            password=PgSQL['PASS'],
+            dbname=PgSQL['NAME']
+        )
+        PgSQL['CURS'] = PgSQL['CONN'].cursor()
+
+    ### DocumentDB
+    if (MgObj['ENABLE']):
+        MgObj['CONN'] = pymongo.MongoClient(
+            host=MgObj['HOST'],
+            port=MgObj['PORT'],
+            username=MgObj['USER'],
+            password=MgObj['PASS']
+        )
+        MgObj['DB'] = MgObj['CONN'][MgObj['NAME']]
 
     ### RabbitMQ
-    Msg_Rabiit = pika.BlockingConnection(pika.ConnectionParameters(
-        host=RabiitMQ['HOST'],
-        port=RabiitMQ['PORT']
-    ))
-    MsgChannelPublish = Msg_Rabiit.channel()
-    MsgChannelPublish.queue_declare(queue=RabiitMQ['QUEUE'], durable=True)
+    if (RabiitMQ['ENABLE']):
+        RabiitMQ['CONN'] = pika.BlockingConnection(pika.ConnectionParameters(
+            host=RabiitMQ['HOST'],
+            port=RabiitMQ['PORT']
+        ))
+        RabiitMQ['CHANNEL'] = RabiitMQ['CONN'].channel()
+        RabiitMQ['CHANNEL'].queue_declare(queue=RabiitMQ['QUEUE'], durable=True)
 
     ### Sources Config
     with open(ConfigPath+'Sources.json', 'r') as fConfigFile:
@@ -160,6 +202,65 @@ def EnvironmentSetup():
     del gCitiesInterestArea
 
 
+def GetLogRecords(v_Source=None, v_CollectionId=None):
+    global ExecutionId, LogPath, PgSQL, MgObj, jSources, FieldDelim
+
+    SourceData = jSources[v_Source]
+    CollectionId = v_CollectionId
+
+    ReturnArr = []
+    LogArr = []
+    if (not PgSQL['ENABLE']):
+        LogFileName = LogPath+SourceData['SysName']+'_'+str(CollectionId)+'_'+str(ExecutionId)+'.csv'
+        if os.path.isfile(LogFileName):
+            with open(LogFileName, 'r') as fCsvLogFile:
+                LogFile = fCsvLogFile.read()
+            LogArr = CsvToDictArray(LogFile, FieldDelim)
+    else:
+        PgSQL_Select_Files_From_Log = ("""
+            SELECT log_unique_id,execution_id,execution_dt,collection_id,interest_bbox_id,
+            interest_bbox_name,search_range_start_dt,search_range_end_dt,meta_file_unique_id,
+            meta_file_dt,meta_file_id,meta_file_name FROM sat_images.metafiles_log WHERE
+            execution_id='{execution_id}' AND collection_id='{collection_id}';
+            """.format(
+                execution_id = ExecutionId,
+                collection_id = CollectionId
+            ))
+        PgSQL['CURS'].execute(PgSQL_Select_Files_From_Log)
+        PgSQL_ROWS = PgSQL['CURS'].fetchall()
+        for DbItem in PgSQL_ROWS:
+            LogArr.append({
+                'LogUniqueId':DbItem[0],
+                'ExecutionId':DbItem[1],
+                'ExecutionDt':DbItem[2].isoformat(),
+                'CollectionId':DbItem[3],
+                'InterestBBOXId':DbItem[4],
+                'InterestBBOXName':DbItem[5],
+                'SearchRangeStartDt':DbItem[6].isoformat(),
+                'SearchRangeEndDt':DbItem[7].isoformat(),
+                'MetaFileUniqueId':DbItem[8],
+                'MetaFileDt':DbItem[9].isoformat(),
+                'MetaFileId':DbItem[10],
+                'MetaFileName':DbItem[11]
+            })
+
+    for LogItem in LogArr:
+        LogItem['Metadata'] = {}
+        if (not MgObj['ENABLE']):
+            with open(os.path.realpath(LogItem['MetaFileName']), 'r') as fJsonMetaFIle:
+                LogItem['Metadata'] = json.load(fJsonMetaFIle)
+        else:
+            try:
+                if MgObj['DB'][CollectionId].count_documents({'_id': LogItem['MetaFileUniqueId']}):
+                    LogItem['Metadata'] = MgObj['DB'][CollectionId].find_one({'_id': LogItem['MetaFileUniqueId']})
+            except Exception as e:
+                print(f"[MgOBJ ERROR] {e}")
+
+        ReturnArr.append(LogItem)
+
+    return ReturnArr
+
+
 def CreateRetrySession(retries=3, backoff_factor=1, status_forcelist=(429, 500, 502, 503, 504)):
     session = requests.Session()
     retry = Retry(
@@ -177,7 +278,7 @@ def CreateRetrySession(retries=3, backoff_factor=1, status_forcelist=(429, 500, 
 
 
 def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_bUpdateCatallog=False):
-    global ExecutionId, ExecutionDt, MetaPath, LogPath, jSources, gCitiesInterestBBOX, FieldDelim
+    global ExecutionId, ExecutionDt, MetaPath, LogPath, jSources, gCitiesInterestBBOX, FieldDelim, PgSQL, MgObj, RabiitMQ
 
     SourceData = jSources[v_Source]
     MetaFileName = os.path.realpath(MetaPath+SourceData['SysName']+'_'+'Collections.meta.json')
@@ -258,15 +359,38 @@ def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_
                     dtItem = datetime.datetime.fromisoformat(CatSearchItem['properties']['datetime'])
                     SavePath = os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/'+str(gInterestBBOX['id']))
                     FileName = SavePath+'/'+CatSearchItem['id']+'.json'
+                    ActualFileName = FileName
 
                     ### Search For Duplicated Files
-                    bFileExists = False
-                    ActualFileName = FileName
-                    for root, dirs, files in os.walk(os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/')):
-                        if CatSearchItem['id']+'.json' in files:
-                            bFileExists = True
-                            ActualFileName = os.path.join(root, CatSearchItem['id']+'.json')
+                    if (MgObj['ENABLE']):
+                        bDocumentExists = False
+                        try:
+                            if MgObj['DB'][CollectionId].count_documents({'_id': CatSearchItem['_id']}):
+                                bDocumentExists = True
+                                ActualFileName = MgObj['DB'][CollectionId].find_one({'_id': CatSearchItem['_id']})['_filename']
+                        except Exception as e:
+                            print(f"[MgOBJ ERROR] {e}")
+                    else:
+                        bFileExists = False
+                        for root, dirs, files in os.walk(os.path.realpath(MetaPath+CollectionId+'/'+dtItem.strftime("%Y%m%d")+'/')):
+                            if CatSearchItem['id']+'.json' in files:
+                                bFileExists = True
+                                ActualFileName = os.path.join(root, CatSearchItem['id']+'.json')
+
                     CatSearchItem['_filename'] = ActualFileName
+                    ### Save To DocumentDB
+                    if (MgObj['ENABLE']):
+                        if (not bDocumentExists):
+                            try:
+                                MgObj['DB'][CollectionId].insert_one(CatSearchItem)
+                            except pymongo.errors.DuplicateKeyError:
+                                print(f"[DB WARNING] Documento duplicado para {CatSearchItem['_id']} na coleção {CollectionId}")
+                    else:
+                        ### Save File Locally
+                        if (not bFileExists):
+                            os.makedirs(SavePath, exist_ok=True)
+                            with open(FileName,'w') as fConfigFile:
+                                fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
 
                     ### Save Reference Log to Array
                     jLogData = {
@@ -280,27 +404,74 @@ def GetPlanetaryComputer(v_Source=None, v_dtLoopStart=None, v_dtLoopEnd=None, v_
                         'SearchRangeEndDt':v_dtLoopEnd.astimezone().isoformat(),
                         'MetaFileUniqueId':CatSearchItem['_id'],
                         'MetaFileDt':dtItem.isoformat(),
+                        'MetaFileId':CatSearchItem['id'],
                         'MetaFileName':CatSearchItem['_filename']
                     }
                     LogDataArr.append(jLogData)
 
-                    ### Save File Locally
-                    if (not bFileExists):
-                        os.makedirs(SavePath, exist_ok=True)
-                        with open(FileName,'w') as fConfigFile:
-                            fConfigFile.write(json.dumps(CatSearchItem,sort_keys=True,indent=4))
             except requests.exceptions.RequestException as e:
                 print(f"[ERRO] Falha ao buscar {CollectionId} para {gInterestBBOX['name']}: {e}")
                 continue
 
-    ### Save Log File (as CSV)
-    LogFileName = LogPath+SourceData['SysName']+'_'+str(CollectionId)+'_'+str(ExecutionId)+'.csv'
-    with open(os.path.realpath(LogFileName),'w') as fCsvLogFile:
-        fCsvLogFile.write(DictArrayToCsv(LogDataArr, FieldDelim))
+    ### Save Log To Database
+    if (PgSQL['ENABLE']):
+        for jLogData in LogDataArr:
+            PgSQL_Insert_Log = ("""
+                INSERT INTO sat_images.metafiles_log (
+                    log_unique_id,
+                    execution_id,
+                    execution_dt,
+                    collection_id,
+                    interest_bbox_id,
+                    interest_bbox_name,
+                    search_range_start_dt,
+                    search_range_end_dt,
+                    meta_file_unique_id,
+                    meta_file_dt,
+                    meta_file_id,
+                    meta_file_name
+                ) VALUES (
+                    '{log_unique_id}',
+                    '{execution_id}',
+                    to_timestamp('{execution_dt}','dd-mm-yyyy hh24:mi:ss'),
+                    '{collection_id}',
+                    {interest_bbox_id},
+                    '{interest_bbox_name}',
+                    to_timestamp('{search_range_start_dt}','dd-mm-yyyy hh24:mi:ss'),
+                    to_timestamp('{search_range_end_dt}','dd-mm-yyyy hh24:mi:ss'),
+                    '{meta_file_unique_id}',
+                    to_timestamp('{meta_file_dt}','dd-mm-yyyy hh24:mi:ss'),
+                    '{meta_file_id}',
+                    '{meta_file_name}'
+                );
+                """.format(
+                    log_unique_id = jLogData['LogUniqueId'],
+                    execution_id = jLogData['ExecutionId'],
+                    execution_dt = datetime.datetime.fromisoformat(jLogData['ExecutionDt']).strftime("%d-%m-%Y %H:%M:%S"),
+                    collection_id = jLogData['CollectionId'],
+                    interest_bbox_id = jLogData['InterestBBOXId'],
+                    interest_bbox_name = jLogData['InterestBBOXName'].replace("'","''"),
+                    search_range_start_dt = datetime.datetime.fromisoformat(jLogData['SearchRangeStartDt']).strftime("%d-%m-%Y %H:%M:%S"),
+                    search_range_end_dt = datetime.datetime.fromisoformat(jLogData['SearchRangeEndDt']).strftime("%d-%m-%Y %H:%M:%S"),
+                    meta_file_unique_id = jLogData['MetaFileUniqueId'],
+                    meta_file_dt = datetime.datetime.fromisoformat(jLogData['MetaFileDt']).strftime("%d-%m-%Y %H:%M:%S"),
+                    meta_file_id = jLogData['MetaFileId'],
+                    meta_file_name = jLogData['MetaFileName']
+                ))
+            try:
+                PgSQL['CURS'].execute(PgSQL_Insert_Log)
+            except psycopg2.Error as e:
+                print(f"[PgSQL ERROR] {e}")
+        PgSQL['CONN'].commit()
+    else:
+        ### Save Log File (as CSV)
+        LogFileName = LogPath+SourceData['SysName']+'_'+str(CollectionId)+'_'+str(ExecutionId)+'.csv'
+        with open(os.path.realpath(LogFileName),'w') as fCsvLogFile:
+            fCsvLogFile.write(DictArrayToCsv(LogDataArr, FieldDelim))
 
 
 def ProcessPlanetaryComputer(v_Source=None):
-    global ExecutionId, LogPath, MetaPath, jSources, FieldDelim, PgSQL_CONN, PgSQL_CURS, MsgChannelPublish, RabiitMQ
+    global ExecutionId, LogPath, MetaPath, jSources, FieldDelim, PgSQL, MgObj, RabiitMQ
 
     SourceData = jSources[v_Source]
     MetaFileName = os.path.realpath(MetaPath+SourceData['SysName']+'_'+'Collections.meta.json')
@@ -314,127 +485,49 @@ def ProcessPlanetaryComputer(v_Source=None):
 
     for collection in jCollections:
         CollectionId = collection['CollectionId']
-
-        LogUniqFiles = []
-        LogUniqItems = []
-        LogFileName = LogPath+SourceData['SysName']+'_'+str(CollectionId)+'_'+str(ExecutionId)+'.csv'
-        if os.path.isfile(LogFileName):
-            with open(LogFileName, 'r') as fCsvLogFile:
-                LogFile = fCsvLogFile.read()
-
-            CsvHEader = LogFile.split('\n')[0].split(FieldDelim)
-            for CsvLine in LogFile.split('\n')[1:]:
-                if (len(CsvLine) == 0):
-                    continue
-                CsvItems = CsvLine.split(FieldDelim)
-                LogUniqItems.append(CsvItems[0])
-                LogUniqFiles.append(CsvItems[10])
-                PgSQL_Insert_Log = ("""
-                    INSERT INTO sat_images.metafiles_log (
-                        log_unique_id,
-                        execution_id,
-                        execution_dt,
-                        collection_id,
-                        interest_bbox_id,
-                        interest_bbox_name,
-                        search_range_start_dt,
-                        search_range_end_dt,
-                        meta_file_id,
-                        meta_file_dt,
-                        meta_file_name
-                    ) VALUES (
-                        '{log_unique_id}',
-                        '{execution_id}',
-                        to_timestamp('{execution_dt}','dd-mm-yyyy hh24:mi:ss'),
-                        '{collection_id}',
-                        {interest_bbox_id},
-                        '{interest_bbox_name}',
-                        to_timestamp('{search_range_start_dt}','dd-mm-yyyy hh24:mi:ss'),
-                        to_timestamp('{search_range_end_dt}','dd-mm-yyyy hh24:mi:ss'),
-                        '{meta_file_id}',
-                        to_timestamp('{meta_file_dt}','dd-mm-yyyy hh24:mi:ss'),
-                        '{meta_file_name}'
-                    );
-                    """.format(
-                        log_unique_id = CsvItems[0],
-                        execution_id = CsvItems[1],
-                        execution_dt = datetime.datetime.fromisoformat(CsvItems[2]).strftime("%d-%m-%Y %H:%M:%S"),
-                        collection_id = CsvItems[3],
-                        interest_bbox_id = CsvItems[4],
-                        interest_bbox_name = CsvItems[5].replace("'","''"),
-                        search_range_start_dt = datetime.datetime.fromisoformat(CsvItems[6]).strftime("%d-%m-%Y %H:%M:%S"),
-                        search_range_end_dt = datetime.datetime.fromisoformat(CsvItems[7]).strftime("%d-%m-%Y %H:%M:%S"),
-                        meta_file_id = CsvItems[8],
-                        meta_file_dt = datetime.datetime.fromisoformat(CsvItems[9]).strftime("%d-%m-%Y %H:%M:%S"),
-                        meta_file_name = CsvItems[10]
-                    ))
-
-                try:
-                    PgSQL_CURS.execute(PgSQL_Insert_Log)
-                except psycopg2.Error as e:
-                    pass #print(f"[DB ERROR] {e}")
-
-            LogUniqFiles = set(LogUniqFiles)
-            LogUniqItems = set(LogUniqItems)
-            PgSQL_CONN.commit()
-
-        ### Verify If Log File is in DB
-        PgSQL_Select_Log = ("""
-            SELECT COUNT(*) FROM sat_images.metafiles_log WHERE
-            execution_id='{execution_id}' AND collection_id='{collection_id}';
-            """.format(
-                execution_id = ExecutionId,
-                collection_id = CollectionId
-            ))
-        PgSQL_CURS.execute(PgSQL_Select_Log)
-        PgSQL_ROWS = PgSQL_CURS.fetchall()
-        PgSQL_Result = int(PgSQL_ROWS[0][0])
-
-        if ((PgSQL_Result == len(LogUniqItems)) and os.path.isfile(LogFileName)):
-            os.remove(LogFileName)
-
-        ### Verify If Log File is in DB
-        PgSQL_Select_Files_From_Log = ("""
-            SELECT DISTINCT meta_file_name FROM sat_images.metafiles_log WHERE
-            execution_id='{execution_id}' AND collection_id='{collection_id}';
-            """.format(
-                execution_id = ExecutionId,
-                collection_id = CollectionId
-            ))
-        PgSQL_CURS.execute(PgSQL_Select_Files_From_Log)
-        PgSQL_ROWS = PgSQL_CURS.fetchall()
-        PgSQL_Result = [DbItem[0] for DbItem in PgSQL_ROWS]
-        PgSQL_Result.sort()
+        LogRecords = GetLogRecords(v_Source, CollectionId)
+        MetaFileUniqueIdList = list(set([LogItem['MetaFileUniqueId'] for LogItem in LogRecords]))
+        MetaFileUniqueIdList.sort()
 
         ArrFilesToDownload = []
-        for MetaFile in PgSQL_Result:
-            with open(os.path.realpath(MetaFile), 'r') as fJsonMetaFIle:
-                jMetaFile = json.load(fJsonMetaFIle)
-                for jAssets in jMetaFile['assets']:
-                    FileAssets = jMetaFile['assets'][jAssets]
-                    if ('image' in FileAssets['type']):
-                        ArrFilesToDownload.append({
-                            'ExecutionId':ExecutionId,
-                            'MetaFile':MetaFile,
-                            'AssetName':jAssets,
-                            'AssetTitle':FileAssets['title'],
-                            'AssetType':FileAssets['type'],
-                            'HrefLink':FileAssets['href']
-                        })
+        for MetaFileUniqueId in MetaFileUniqueIdList:
+            MetaFileId, jMetaFile = next((Item['MetaFileId'],Item['Metadata']) for Item in LogRecords if Item['MetaFileUniqueId'] == MetaFileUniqueId)
+            for jAssets in jMetaFile['assets']:
+                FileAssets = jMetaFile['assets'][jAssets]
+                if ('image' in FileAssets['type']):
+                    ArrFilesToDownload.append({
+                        'ExecutionId':ExecutionId,
+                        'CollectionId':CollectionId,
+                        'FileId':jAssets,
+                        'MetaFileId':MetaFileId,
+                        'AssetName':jAssets,
+                        'AssetTitle':FileAssets['title'],
+                        'AssetType':FileAssets['type'],
+                        'HrefLink':FileAssets['href']
+                    })
 
         ### Verify Existent Files Before RabbitMQ
 
         for jDonFile in ArrFilesToDownload:
-            MsgChannelPublish.basic_publish (
-                exchange='',
-                routing_key=RabiitMQ['QUEUE'],
-                body=json.dumps(jDonFile),
-                properties=pika.BasicProperties(delivery_mode=2)
-            )
+            try:
+                RabiitMQ['CHANNEL'].basic_publish (
+                    exchange='',
+                    routing_key=RabiitMQ['RoutingKey'],
+                    body=json.dumps(jDonFile),
+                    properties=pika.BasicProperties(delivery_mode=2)
+                )
+            except pika.exceptions.AMQPConnectionError as e:
+                print(f"[ERRO] Conexão com RabbitMQ perdida: {e}")
+                break
+            except pika.exceptions.AMQPChannelError as e:
+                print(f"[ERRO] Canal RabbitMQ inválido: {e}")
+                break
+            except Exception as e:
+                print(f"[ERRO] Falha ao publicar mensagem {jDonFile}: {e}")
 
 
 def MainProcess():
-    global ExecutionId, ExecutionDt, jSources, PgSQL_CURS
+    global ExecutionId, ExecutionDt, jSources
 
     ExecutionDt = datetime.datetime.now(datetime.UTC).astimezone().isoformat()
     ExecutionId = str(hashlib.md5((ExecutionDt).encode('UTF-8')).hexdigest())
@@ -448,8 +541,9 @@ def MainProcess():
         bUpdateCatallog = True
 
     # Just for DEV Tests
-    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=7)
-    ExecutionId = 'f86278350dd7c87e15b83a6627eb4f32'
+    #dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0, day=1, month=1, year=2025)
+    dtLoopStart = dtLoopEnd.replace(hour=0, minute=0, second=0) - datetime.timedelta(days=30)
+    ExecutionId = '9f959dccbb23029df589d1d0ff821f06'
     #dtLoopStart = datetime.datetime.now().replace(hour=0,  minute=0,  second=0,  microsecond=0, day=24, month=8, year=2025)
     #dtLoopEnd   = datetime.datetime.now().replace(hour=23, minute=59, second=59, microsecond=0, day=24, month=8, year=2025)
 
@@ -457,29 +551,39 @@ def MainProcess():
 
     for Source in jSources:
         if (jSources[Source]['SysName'] == 'PlanetaryComputer'):
-            # GetPlanetaryComputer(Source, dtLoopStart, dtLoopEnd, bUpdateCatallog)
+            print(ExecutionId, Source, dtLoopStart, dtLoopEnd, bUpdateCatallog)
+            #GetPlanetaryComputer(Source, dtLoopStart, dtLoopEnd, bUpdateCatallog)
             ProcessPlanetaryComputer(Source)
 
 
 def main():
-    global PgSQL_CONN, PgSQL_CURS, Msg_Rabiit
+    global PgSQL, MgObj, RabiitMQ
 
     try:
         MainProcess()
     except KeyboardInterrupt:
         print("Py Geo Images Interrupted!")
+    except Exception as e:
+        print(f"[ERRO] {e}")
     finally:
-        if Msg_Rabiit:
-            Msg_Rabiit.close()
-        if PgSQL_CURS:
-            PgSQL_CURS.close()
-        if PgSQL_CONN:
-            PgSQL_CONN.close()
-        sys.exit(0)
+        if (PgSQL):
+            if (PgSQL['CURS']):
+                PgSQL['CURS'].close()
+            if (PgSQL['CONN']):
+                PgSQL['CONN'].close()
+        if (MgObj):
+            if (MgObj['ENABLE']):
+                MgObj['CONN'].close()
+        if (RabiitMQ):
+            if (RabiitMQ['CHANNEL']):
+                RabiitMQ['CHANNEL'].close()
+            if (RabiitMQ['CONN']):
+                RabiitMQ['CONN'].close()
 
 
 if __name__ == "__main__":
     main()
+
 
 '''
 DROP TABLE sat_images.metafiles_log;
@@ -492,8 +596,9 @@ CREATE TABLE sat_images.metafiles_log (
     interest_bbox_name      VARCHAR(100),
     search_range_start_dt   TIMESTAMPTZ,
     search_range_end_dt     TIMESTAMPTZ,
-    meta_file_id            CHAR(32),
+    meta_file_unique_id     CHAR(32),
     meta_file_dt            TIMESTAMPTZ,
+    meta_file_id            VARCHAR(100),
     meta_file_name          VARCHAR(255)
 );
 '''
