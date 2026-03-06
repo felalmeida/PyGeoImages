@@ -4,1473 +4,1607 @@
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Classification",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.388088-03:00",
+        "_dt_update": "2026-03-02T18:37:54.044036-03:00",
         "_id": "3dep-lidar-classification",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-lidar-copc",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Point Cloud",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.385307-03:00",
+        "_dt_update": "2026-03-02T18:37:54.041327-03:00",
         "_id": "3dep-lidar-copc",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-lidar-dsm",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Digital Surface Model",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.379608-03:00",
+        "_dt_update": "2026-03-02T18:37:54.035338-03:00",
         "_id": "3dep-lidar-dsm",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-lidar-dtm",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Digital Terrain Model",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.388258-03:00",
+        "_dt_update": "2026-03-02T18:37:54.044192-03:00",
         "_id": "3dep-lidar-dtm",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-lidar-dtm-native",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Digital Terrain Model (Native)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.387877-03:00",
+        "_dt_update": "2026-03-02T18:37:54.043829-03:00",
         "_id": "3dep-lidar-dtm-native",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-lidar-hag",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Height above Ground",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.383351-03:00",
+        "_dt_update": "2026-03-02T18:37:54.039359-03:00",
         "_id": "3dep-lidar-hag",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-lidar-intensity",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Intensity",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.384460-03:00",
+        "_dt_update": "2026-03-02T18:37:54.040497-03:00",
         "_id": "3dep-lidar-intensity",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-lidar-pointsourceid",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Point Source",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.384633-03:00",
+        "_dt_update": "2026-03-02T18:37:54.040716-03:00",
         "_id": "3dep-lidar-pointsourceid",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-lidar-returns",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Lidar Returns",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.385896-03:00",
+        "_dt_update": "2026-03-02T18:37:54.041912-03:00",
         "_id": "3dep-lidar-returns",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "3dep-seamless",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS 3DEP Seamless DEMs",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.379419-03:00",
+        "_dt_update": "2026-03-02T18:37:54.035072-03:00",
         "_id": "3dep-seamless",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "alos-dem",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ALOS World 3D-30m",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.389817-03:00",
+        "_dt_update": "2026-03-02T18:37:54.045788-03:00",
         "_id": "alos-dem",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "alos-fnf-mosaic",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ALOS Forest/Non-Forest Annual Mosaic",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.385728-03:00",
+        "_dt_update": "2026-03-02T18:37:54.041748-03:00",
         "_id": "alos-fnf-mosaic",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "alos-palsar-mosaic",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ALOS PALSAR Annual Mosaic",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.390056-03:00",
+        "_dt_update": "2026-03-02T18:37:54.045963-03:00",
         "_id": "alos-palsar-mosaic",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "aster-l1t",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ASTER L1T",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.400228-03:00",
+        "_dt_update": "2026-03-02T18:37:54.056612-03:00",
         "_id": "aster-l1t",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "chesapeake-lc-13",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Chesapeake Land Cover (13-class)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.396334-03:00",
+        "_dt_update": "2026-03-02T18:37:54.052214-03:00",
         "_id": "chesapeake-lc-13",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "chesapeake-lc-7",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Chesapeake Land Cover (7-class)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.396150-03:00",
+        "_dt_update": "2026-03-02T18:37:54.052018-03:00",
         "_id": "chesapeake-lc-7",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "chesapeake-lu",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Chesapeake Land Use",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.396506-03:00",
+        "_dt_update": "2026-03-02T18:37:54.052468-03:00",
         "_id": "chesapeake-lu",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "chloris-biomass",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Chloris Biomass",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.386544-03:00",
+        "_dt_update": "2026-03-02T18:37:54.042471-03:00",
         "_id": "chloris-biomass",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "cil-gdpcir-cc-by",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "CIL Global Downscaled Projections for Climate Impacts Research (CC-BY-4.0)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.401794-03:00",
+        "_dt_update": "2026-03-02T18:37:54.058275-03:00",
         "_id": "cil-gdpcir-cc-by",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "cil-gdpcir-cc-by-sa",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "CIL Global Downscaled Projections for Climate Impacts Research (CC-BY-SA-4.0)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.400419-03:00",
+        "_dt_update": "2026-03-02T18:37:54.056839-03:00",
         "_id": "cil-gdpcir-cc-by-sa",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "cil-gdpcir-cc0",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "CIL Global Downscaled Projections for Climate Impacts Research (CC0-1.0)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.401613-03:00",
+        "_dt_update": "2026-03-02T18:37:54.058086-03:00",
         "_id": "cil-gdpcir-cc0",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "conus404",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "CONUS404",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.384077-03:00",
+        "_dt_update": "2026-03-02T18:37:54.040140-03:00",
         "_id": "conus404",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "cop-dem-glo-30",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Copernicus DEM GLO-30",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.381634-03:00",
+        "_dt_update": "2026-03-02T18:37:54.037806-03:00",
         "_id": "cop-dem-glo-30",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "cop-dem-glo-90",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Copernicus DEM GLO-90",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.381810-03:00",
+        "_dt_update": "2026-03-02T18:37:54.037980-03:00",
         "_id": "cop-dem-glo-90",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-annual-hi",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Annual Hawaii",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.380631-03:00",
+        "_dt_update": "2026-03-02T18:37:54.036501-03:00",
         "_id": "daymet-annual-hi",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-annual-na",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Annual North America",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.380257-03:00",
+        "_dt_update": "2026-03-02T18:37:54.036022-03:00",
         "_id": "daymet-annual-na",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-annual-pr",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Annual Puerto Rico",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.378967-03:00",
+        "_dt_update": "2026-03-02T18:37:54.034605-03:00",
         "_id": "daymet-annual-pr",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-daily-hi",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Daily Hawaii",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.379215-03:00",
+        "_dt_update": "2026-03-02T18:37:54.034856-03:00",
         "_id": "daymet-daily-hi",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-daily-na",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Daily North America",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.394313-03:00",
+        "_dt_update": "2026-03-02T18:37:54.050203-03:00",
         "_id": "daymet-daily-na",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-daily-pr",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Daily Puerto Rico",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.387710-03:00",
+        "_dt_update": "2026-03-02T18:37:54.043627-03:00",
         "_id": "daymet-daily-pr",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-monthly-hi",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Monthly Hawaii",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.380814-03:00",
+        "_dt_update": "2026-03-02T18:37:54.036762-03:00",
         "_id": "daymet-monthly-hi",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-monthly-na",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Monthly North America",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.380448-03:00",
+        "_dt_update": "2026-03-02T18:37:54.036244-03:00",
         "_id": "daymet-monthly-na",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "daymet-monthly-pr",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Daymet Monthly Puerto Rico",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.381048-03:00",
+        "_dt_update": "2026-03-02T18:37:54.037018-03:00",
         "_id": "daymet-monthly-pr",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "deltares-floods",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Deltares Global Flood Maps",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.391382-03:00",
+        "_dt_update": "2026-03-02T18:37:54.047252-03:00",
         "_id": "deltares-floods",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "deltares-water-availability",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Deltares Global Water Availability",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.390248-03:00",
+        "_dt_update": "2026-03-02T18:37:54.046230-03:00",
         "_id": "deltares-water-availability",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "drcog-lulc",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Denver Regional Council of Governments Land Use Land Cover",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.395953-03:00",
+        "_dt_update": "2026-03-02T18:37:54.051854-03:00",
         "_id": "drcog-lulc",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "eclipse",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Urban Innovation Eclipse Sensor Data",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.397574-03:00",
+        "_dt_update": "2026-03-02T18:37:54.053599-03:00",
         "_id": "eclipse",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "ecmwf-forecast",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ECMWF Open Data (real-time)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.394877-03:00",
+        "_dt_update": "2026-03-02T18:37:54.050800-03:00",
         "_id": "ecmwf-forecast",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "era5-pds",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ERA5 - PDS",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.407814-03:00",
+        "_dt_update": "2026-03-02T18:37:54.064248-03:00",
         "_id": "era5-pds",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "esa-cci-lc",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ESA Climate Change Initiative Land Cover Maps (Cloud Optimized GeoTIFF)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.397842-03:00",
+        "_dt_update": "2026-03-02T18:37:54.053872-03:00",
         "_id": "esa-cci-lc",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "esa-cci-lc-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ESA Climate Change Initiative Land Cover Maps (NetCDF)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.398119-03:00",
+        "_dt_update": "2026-03-02T18:37:54.054075-03:00",
         "_id": "esa-cci-lc-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "esa-worldcover",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "ESA WorldCover",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.406178-03:00",
+        "_dt_update": "2026-03-02T18:37:54.062366-03:00",
         "_id": "esa-worldcover",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "fia",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Forest Inventory and Analysis",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.379794-03:00",
+        "_dt_update": "2026-03-02T18:37:54.035574-03:00",
         "_id": "fia",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "fws-nwi",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "FWS National Wetlands Inventory",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.398342-03:00",
+        "_dt_update": "2026-03-02T18:37:54.054274-03:00",
         "_id": "fws-nwi",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "gap",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS Gap Land Cover",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.388440-03:00",
+        "_dt_update": "2026-03-02T18:37:54.044411-03:00",
         "_id": "gap",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "gbif",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Global Biodiversity Information Facility (GBIF)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.389143-03:00",
+        "_dt_update": "2026-03-02T18:37:54.045124-03:00",
         "_id": "gbif",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "gnatsgo-rasters",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "gNATSGO Soil Database - Rasters",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.382734-03:00",
+        "_dt_update": "2026-03-02T18:37:54.038764-03:00",
         "_id": "gnatsgo-rasters",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "gnatsgo-tables",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "gNATSGO Soil Database - Tables",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.381270-03:00",
+        "_dt_update": "2026-03-02T18:37:54.037319-03:00",
         "_id": "gnatsgo-tables",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "goes-cmi",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "GOES-R Cloud & Moisture Imagery",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.383770-03:00",
+        "_dt_update": "2026-03-02T18:37:54.039848-03:00",
         "_id": "goes-cmi",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "goes-glm",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "GOES-R Lightning Detection",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.399609-03:00",
+        "_dt_update": "2026-03-02T18:37:54.055888-03:00",
         "_id": "goes-glm",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "gpm-imerg-hhr",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "GPM IMERG",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.382538-03:00",
+        "_dt_update": "2026-03-02T18:37:54.038529-03:00",
         "_id": "gpm-imerg-hhr",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "gridmet",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "gridMET",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.380059-03:00",
+        "_dt_update": "2026-03-02T18:37:54.035788-03:00",
         "_id": "gridmet",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "hgb",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "HGB: Harmonized Global Biomass for 2010",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.381455-03:00",
+        "_dt_update": "2026-03-02T18:37:54.037575-03:00",
         "_id": "hgb",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "hls2-l30",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Harmonized Landsat Sentinel-2 (HLS) Version 2.0, Landsat Data",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.406702-03:00",
+        "_dt_update": "2026-03-02T18:37:54.062878-03:00",
         "_id": "hls2-l30",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "hls2-s30",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Harmonized Landsat Sentinel-2 (HLS) Version 2.0, Sentinel-2 Data",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.404865-03:00",
+        "_dt_update": "2026-03-02T18:37:54.061191-03:00",
         "_id": "hls2-s30",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "hrea",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "HREA: High Resolution Electricity Access",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.392348-03:00",
+        "_dt_update": "2026-03-02T18:37:54.048276-03:00",
         "_id": "hrea",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "io-biodiversity",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Biodiversity Intactness",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.401013-03:00",
+        "_dt_update": "2026-03-02T18:37:54.057471-03:00",
         "_id": "io-biodiversity",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "io-lulc",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Esri 10-Meter Land Cover (10-class)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.395508-03:00",
+        "_dt_update": "2026-03-02T18:37:54.051384-03:00",
         "_id": "io-lulc",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "io-lulc-9-class",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "10m Annual Land Use Land Cover (9-class) V1",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.400785-03:00",
+        "_dt_update": "2026-03-02T18:37:54.057294-03:00",
         "_id": "io-lulc-9-class",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "io-lulc-annual-v02",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "10m Annual Land Use Land Cover (9-class) V2",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.383567-03:00",
+        "_dt_update": "2026-03-02T18:37:54.039569-03:00",
         "_id": "io-lulc-annual-v02",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "jrc-gsw",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "JRC Global Surface Water",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.391192-03:00",
+        "_dt_update": "2026-03-02T18:37:54.047079-03:00",
         "_id": "jrc-gsw",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "kaza-hydroforecast",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "HydroForecast - Kwando & Upper Zambezi Rivers",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.386714-03:00",
+        "_dt_update": "2026-03-02T18:37:54.042622-03:00",
         "_id": "kaza-hydroforecast",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "landsat-c2-l1",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Landsat Collection 2 Level-1",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.395708-03:00",
+        "_dt_update": "2026-03-02T18:37:54.051588-03:00",
         "_id": "landsat-c2-l1",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "landsat-c2-l2",
-        "Enabled": false,
+        "Enabled": true,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Landsat Collection 2 Level-2",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.386361-03:00",
+        "_dt_update": "2026-03-02T18:37:54.042309-03:00",
         "_id": "landsat-c2-l2",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "met-office-global-deterministic-height",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Height levels collection Met Office Global 10km deterministic weather forecast",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.407280-03:00",
+        "_dt_update": "2026-03-02T18:37:54.063560-03:00",
         "_id": "met-office-global-deterministic-height",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "met-office-global-deterministic-near-surface",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Near-surface level collection Met Office global deterministic 10km forecast",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.406360-03:00",
+        "_dt_update": "2026-03-02T18:37:54.062525-03:00",
         "_id": "met-office-global-deterministic-near-surface",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "met-office-global-deterministic-pressure",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Pressure levels collection Met Office Global 10km deterministic weather forecast",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.407107-03:00",
+        "_dt_update": "2026-03-02T18:37:54.063315-03:00",
         "_id": "met-office-global-deterministic-pressure",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "met-office-global-deterministic-whole-atmosphere",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Whole Atmosphere collection Met Office Global 10km deterministic weather forecast",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.407618-03:00",
+        "_dt_update": "2026-03-02T18:37:54.063949-03:00",
         "_id": "met-office-global-deterministic-whole-atmosphere",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "met-office-uk-deterministic-height",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Height levels collection Met Office UKV 2km deterministic forecast",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.406872-03:00",
+        "_dt_update": "2026-03-02T18:37:54.063068-03:00",
         "_id": "met-office-uk-deterministic-height",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "met-office-uk-deterministic-near-surface",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Near-surface level collection Met Office UKV 2km deterministic forecast",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.406530-03:00",
+        "_dt_update": "2026-03-02T18:37:54.062714-03:00",
         "_id": "met-office-uk-deterministic-near-surface",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "met-office-uk-deterministic-pressure",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Pressure levels collection Met Office UKV 2km deterministic forecast",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.403480-03:00",
+        "_dt_update": "2026-03-02T18:37:54.059871-03:00",
         "_id": "met-office-uk-deterministic-pressure",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "met-office-uk-deterministic-whole-atmosphere",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Whole Atmosphere collection Met Office UKV 2km deterministic forecast",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.407450-03:00",
+        "_dt_update": "2026-03-02T18:37:54.063798-03:00",
         "_id": "met-office-uk-deterministic-whole-atmosphere",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "mobi",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MoBI: Map of Biodiversity Importance",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.386122-03:00",
+        "_dt_update": "2026-03-02T18:37:54.042074-03:00",
         "_id": "mobi",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-09A1-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Surface Reflectance 8-Day (500m)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.389649-03:00",
+        "_dt_update": "2026-03-02T18:37:54.045606-03:00",
         "_id": "modis-09A1-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-09Q1-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Surface Reflectance 8-Day (250m)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.391851-03:00",
+        "_dt_update": "2026-03-02T18:37:54.047815-03:00",
         "_id": "modis-09Q1-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-10A1-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Snow Cover Daily",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.402461-03:00",
+        "_dt_update": "2026-03-02T18:37:54.058888-03:00",
         "_id": "modis-10A1-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-10A2-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Snow Cover 8-day",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.394709-03:00",
+        "_dt_update": "2026-03-02T18:37:54.050582-03:00",
         "_id": "modis-10A2-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-11A1-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Land Surface Temperature/Emissivity Daily",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.393602-03:00",
+        "_dt_update": "2026-03-02T18:37:54.049525-03:00",
         "_id": "modis-11A1-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-11A2-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Land Surface Temperature/Emissivity 8-Day",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.387516-03:00",
+        "_dt_update": "2026-03-02T18:37:54.043440-03:00",
         "_id": "modis-11A2-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-13A1-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Vegetation Indices 16-Day (500m)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.394119-03:00",
+        "_dt_update": "2026-03-02T18:37:54.049984-03:00",
         "_id": "modis-13A1-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-13Q1-061",
-        "Enabled": false,
+        "Enabled": true,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Vegetation Indices 16-Day (250m)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.392598-03:00",
+        "_dt_update": "2026-03-02T18:37:54.048515-03:00",
         "_id": "modis-13Q1-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-14A1-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Thermal Anomalies/Fire Daily",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.392165-03:00",
+        "_dt_update": "2026-03-02T18:37:54.048079-03:00",
         "_id": "modis-14A1-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-14A2-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Thermal Anomalies/Fire 8-Day",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.392843-03:00",
+        "_dt_update": "2026-03-02T18:37:54.048756-03:00",
         "_id": "modis-14A2-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-15A2H-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Leaf Area Index/FPAR 8-Day",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.393357-03:00",
+        "_dt_update": "2026-03-02T18:37:54.049244-03:00",
         "_id": "modis-15A2H-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-15A3H-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Leaf Area Index/FPAR 4-Day",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.393814-03:00",
+        "_dt_update": "2026-03-02T18:37:54.049747-03:00",
         "_id": "modis-15A3H-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-16A3GF-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Net Evapotranspiration Yearly Gap-Filled",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.390497-03:00",
+        "_dt_update": "2026-03-02T18:37:54.046471-03:00",
         "_id": "modis-16A3GF-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-17A2H-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Gross Primary Productivity 8-Day",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.387261-03:00",
+        "_dt_update": "2026-03-02T18:37:54.043162-03:00",
         "_id": "modis-17A2H-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-17A2HGF-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Gross Primary Productivity 8-Day Gap-Filled",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.388690-03:00",
+        "_dt_update": "2026-03-02T18:37:54.044757-03:00",
         "_id": "modis-17A2HGF-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-17A3HGF-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Net Primary Production Yearly Gap-Filled",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.389404-03:00",
+        "_dt_update": "2026-03-02T18:37:54.045343-03:00",
         "_id": "modis-17A3HGF-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-21A2-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Land Surface Temperature/3-Band Emissivity 8-Day",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.390747-03:00",
+        "_dt_update": "2026-03-02T18:37:54.046718-03:00",
         "_id": "modis-21A2-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-43A4-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Nadir BRDF-Adjusted Reflectance (NBAR) Daily",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.391608-03:00",
+        "_dt_update": "2026-03-02T18:37:54.047448-03:00",
         "_id": "modis-43A4-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "modis-64A1-061",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MODIS Burned Area Monthly",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.385529-03:00",
+        "_dt_update": "2026-03-02T18:37:54.041526-03:00",
         "_id": "modis-64A1-061",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "ms-buildings",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Microsoft Building Footprints",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.405098-03:00",
+        "_dt_update": "2026-03-02T18:37:54.061354-03:00",
         "_id": "ms-buildings",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "mtbs",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "MTBS: Monitoring Trends in Burn Severity",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.384822-03:00",
+        "_dt_update": "2026-03-02T18:37:54.040891-03:00",
         "_id": "mtbs",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "naip",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "NAIP: National Agriculture Imagery Program",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.400592-03:00",
+        "_dt_update": "2026-03-02T18:37:54.057019-03:00",
         "_id": "naip",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "nasa-nex-gddp-cmip6",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Earth Exchange Global Daily Downscaled Projections (NEX-GDDP-CMIP6)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.382339-03:00",
+        "_dt_update": "2026-03-02T18:37:54.038365-03:00",
         "_id": "nasa-nex-gddp-cmip6",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "nasadem",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "NASADEM HGT v001",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.395318-03:00",
+        "_dt_update": "2026-03-02T18:37:54.051195-03:00",
         "_id": "nasadem",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-c-cap",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "C-CAP Regional Land Cover and Change",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.385128-03:00",
+        "_dt_update": "2026-03-02T18:37:54.041107-03:00",
         "_id": "noaa-c-cap",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-cdr-ocean-heat-content",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Global Ocean Heat Content CDR",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.401427-03:00",
+        "_dt_update": "2026-03-02T18:37:54.057902-03:00",
         "_id": "noaa-cdr-ocean-heat-content",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-cdr-ocean-heat-content-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Global Ocean Heat Content CDR NetCDFs",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.403093-03:00",
+        "_dt_update": "2026-03-02T18:37:54.059493-03:00",
         "_id": "noaa-cdr-ocean-heat-content-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-cdr-sea-surface-temperature-optimum-interpolation",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sea Surface Temperature - Optimum Interpolation CDR",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.402256-03:00",
+        "_dt_update": "2026-03-02T18:37:54.058653-03:00",
         "_id": "noaa-cdr-sea-surface-temperature-optimum-interpolation",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-cdr-sea-surface-temperature-whoi",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sea Surface Temperature - WHOI CDR",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.401223-03:00",
+        "_dt_update": "2026-03-02T18:37:54.057706-03:00",
         "_id": "noaa-cdr-sea-surface-temperature-whoi",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-cdr-sea-surface-temperature-whoi-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sea Surface Temperature - WHOI CDR NetCDFs",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.402043-03:00",
+        "_dt_update": "2026-03-02T18:37:54.058451-03:00",
         "_id": "noaa-cdr-sea-surface-temperature-whoi-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-climate-normals-gridded",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "NOAA US Gridded Climate Normals (Cloud-Optimized GeoTIFF)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.400044-03:00",
+        "_dt_update": "2026-03-02T18:37:54.056426-03:00",
         "_id": "noaa-climate-normals-gridded",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-climate-normals-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "NOAA US Gridded Climate Normals (NetCDF)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.399378-03:00",
+        "_dt_update": "2026-03-02T18:37:54.055525-03:00",
         "_id": "noaa-climate-normals-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-climate-normals-tabular",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "NOAA US Tabular Climate Normals",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.399165-03:00",
+        "_dt_update": "2026-03-02T18:37:54.055263-03:00",
         "_id": "noaa-climate-normals-tabular",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-mrms-qpe-1h-pass1",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "NOAA MRMS QPE 1-Hour Pass 1",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.396698-03:00",
+        "_dt_update": "2026-03-02T18:37:54.052762-03:00",
         "_id": "noaa-mrms-qpe-1h-pass1",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-mrms-qpe-1h-pass2",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "NOAA MRMS QPE 1-Hour Pass 2",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.396891-03:00",
+        "_dt_update": "2026-03-02T18:37:54.053023-03:00",
         "_id": "noaa-mrms-qpe-1h-pass2",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-mrms-qpe-24h-pass2",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "NOAA MRMS QPE 24-Hour Pass 2",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.395132-03:00",
+        "_dt_update": "2026-03-02T18:37:54.051020-03:00",
         "_id": "noaa-mrms-qpe-24h-pass2",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "noaa-nclimgrid-monthly",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Monthly NOAA U.S. Climate Gridded Dataset (NClimGrid)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.397168-03:00",
+        "_dt_update": "2026-03-02T18:37:54.053255-03:00",
         "_id": "noaa-nclimgrid-monthly",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "nrcan-landcover",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Land Cover of Canada",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.394500-03:00",
+        "_dt_update": "2026-03-02T18:37:54.050394-03:00",
         "_id": "nrcan-landcover",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "planet-nicfi-analytic",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Planet-NICFI Basemaps (Analytic)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.386989-03:00",
+        "_dt_update": "2026-03-02T18:37:54.042871-03:00",
         "_id": "planet-nicfi-analytic",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "planet-nicfi-visual",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Planet-NICFI Basemaps (Visual)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.388897-03:00",
+        "_dt_update": "2026-03-02T18:37:54.044959-03:00",
         "_id": "planet-nicfi-visual",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-1-grd",
-        "Enabled": false,
+        "Enabled": true,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel 1 Level-1 Ground Range Detected (GRD)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.399798-03:00",
+        "_dt_update": "2026-03-02T18:37:54.056145-03:00",
         "_id": "sentinel-1-grd",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-1-rtc",
-        "Enabled": false,
+        "Enabled": true,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel 1 Radiometrically Terrain Corrected (RTC)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.384287-03:00",
+        "_dt_update": "2026-03-02T18:37:54.040304-03:00",
         "_id": "sentinel-1-rtc",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-2-l2a",
         "Enabled": true,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-2 Level-2A",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.393078-03:00",
+        "_dt_update": "2026-03-02T18:37:54.048923-03:00",
         "_id": "sentinel-2-l2a",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-olci-lfr-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Land (Full Resolution)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.403868-03:00",
+        "_dt_update": "2026-03-02T18:37:54.060240-03:00",
         "_id": "sentinel-3-olci-lfr-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-olci-wfr-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Water (Full Resolution)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.402851-03:00",
+        "_dt_update": "2026-03-02T18:37:54.059278-03:00",
         "_id": "sentinel-3-olci-wfr-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-slstr-frp-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Fire Radiative Power",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.405302-03:00",
+        "_dt_update": "2026-03-02T18:37:54.061532-03:00",
         "_id": "sentinel-3-slstr-frp-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-slstr-lst-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Land Surface Temperature",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.404308-03:00",
+        "_dt_update": "2026-03-02T18:37:54.060611-03:00",
         "_id": "sentinel-3-slstr-lst-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-slstr-wst-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Sea Surface Temperature",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.404502-03:00",
+        "_dt_update": "2026-03-02T18:37:54.060849-03:00",
         "_id": "sentinel-3-slstr-wst-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-sral-lan-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Land Radar Altimetry",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.404105-03:00",
+        "_dt_update": "2026-03-02T18:37:54.060426-03:00",
         "_id": "sentinel-3-sral-lan-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-sral-wat-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Ocean Radar Altimetry",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.404686-03:00",
+        "_dt_update": "2026-03-02T18:37:54.061032-03:00",
         "_id": "sentinel-3-sral-wat-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-synergy-aod-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Global Aerosol",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.403294-03:00",
+        "_dt_update": "2026-03-02T18:37:54.059693-03:00",
         "_id": "sentinel-3-synergy-aod-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-synergy-syn-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Land Surface Reflectance and Aerosol",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.405497-03:00",
+        "_dt_update": "2026-03-02T18:37:54.061745-03:00",
         "_id": "sentinel-3-synergy-syn-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-synergy-v10-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 10-Day Surface Reflectance and NDVI (SPOT VEGETATION)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.403673-03:00",
+        "_dt_update": "2026-03-02T18:37:54.060063-03:00",
         "_id": "sentinel-3-synergy-v10-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-synergy-vg1-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 1-Day Surface Reflectance and NDVI (SPOT VEGETATION)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.405883-03:00",
+        "_dt_update": "2026-03-02T18:37:54.062106-03:00",
         "_id": "sentinel-3-synergy-vg1-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-3-synergy-vgp-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-3 Top of Atmosphere Reflectance (SPOT VEGETATION)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.405696-03:00",
+        "_dt_update": "2026-03-02T18:37:54.061920-03:00",
         "_id": "sentinel-3-synergy-vgp-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "sentinel-5p-l2-netcdf",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "Sentinel-5P Level-2",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.402655-03:00",
+        "_dt_update": "2026-03-02T18:37:54.059090-03:00",
         "_id": "sentinel-5p-l2-netcdf",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "terraclimate",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "TerraClimate",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.382086-03:00",
+        "_dt_update": "2026-03-02T18:37:54.038148-03:00",
         "_id": "terraclimate",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "us-census",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "US Census",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.390975-03:00",
+        "_dt_update": "2026-03-02T18:37:54.046902-03:00",
         "_id": "us-census",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "usda-cdl",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USDA Cropland Data Layers (CDLs)",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.397377-03:00",
+        "_dt_update": "2026-03-02T18:37:54.053429-03:00",
         "_id": "usda-cdl",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "usgs-lcmap-conus-v13",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS LCMAP CONUS Collection 1.3",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.398601-03:00",
+        "_dt_update": "2026-03-02T18:37:54.054682-03:00",
         "_id": "usgs-lcmap-conus-v13",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     },
     {
         "CollectionId": "usgs-lcmap-hawaii-v10",
         "Enabled": false,
         "Source": "Source_01",
         "StacVersion": "1.1.0",
+        "TimeDelta": 7,
         "Title": "USGS LCMAP Hawaii Collection 1.0",
         "Type": "Collection",
-        "_dt_update": "2026-02-17T11:24:47.398856-03:00",
+        "_dt_update": "2026-03-02T18:37:54.054978-03:00",
         "_id": "usgs-lcmap-hawaii-v10",
-        "_ts_update": 1771338287
+        "_ts_update": 1772487474
     }
 ]
